@@ -41,7 +41,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url: '/pets',
       views: {
         'pets-tab': {
-          templateUrl: 'templates/pet-index.html',
+          templateUrl: 'templates/tabs/pet-index.html',
           controller: 'PetIndexCtrl'
         }
       }
@@ -51,8 +51,18 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url: '/pet/:petId',
       views: {
         'pets-tab': {
-          templateUrl: 'templates/pet-detail.html',
+          templateUrl: 'templates/tabs/pet-detail.html',
           controller: 'PetDetailCtrl'
+        }
+      }
+    })
+
+    .state('tab.main', {
+      url: '/main',
+      views: {
+        'main-tab': {
+          templateUrl: 'templates/tabs/mainbutton.html',
+          controller: 'MainTab'
         }
       }
     })
@@ -61,7 +71,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url: '/adopt',
       views: {
         'adopt-tab': {
-          templateUrl: 'templates/adopt.html'
+          templateUrl: 'templates/tabs/adopt.html'
         }
       }
     })
@@ -70,13 +80,45 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url: '/about',
       views: {
         'about-tab': {
-          templateUrl: 'templates/about.html'
+          templateUrl: 'templates/tabs/about.html'
+        }
+      }
+    });
+
+  $stateProvider
+
+    .state('main', {
+      url:'/main',
+      abstract: true,
+      templateUrl: 'templates/main.html'
+    })
+
+    // .state('main.index', {
+    //   url:'/index',
+    //   views: {
+    //     'main-index-header': {
+    //       templateUrl: 'templates/main/header.html'
+    //     },
+    //     'main-index-content': {
+    //       templateUrl: 'templates/main/content.html'
+    //     },
+    //     'main-index-footer': {
+    //       templateUrl: 'templates/main/footer.html'
+    //     }
+    //   }
+    // })
+    
+    .state('main.index', {
+      url:'/index',
+      views: {
+        'main-index': {
+          templateUrl: 'templates/main/index.html'
         }
       }
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/pets');
+  $urlRouterProvider.otherwise('/main/index');
 
 });
 

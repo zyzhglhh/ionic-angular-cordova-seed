@@ -12,4 +12,11 @@ angular.module('starter.controllers', [])
 .controller('PetDetailCtrl', function($scope, $stateParams, PetService) {
   // "Pets" is a service returning mock data (services.js)
   $scope.pet = PetService.get($stateParams.petId);
+})
+
+
+.controller('MainTab', function($scope, $rootScope) {
+  $scope.addmain = function() {
+  	$rootScope.MaiViewName = "main";
+  };
 });
