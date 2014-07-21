@@ -1,0 +1,44 @@
+
+<!-- 
+  Create tabs with an icon and label, using the tabs-positive style. 
+  Each tab's child <ion-nav-view> directive will have its own 
+  navigation history that also transitions its views in and out.
+-->
+
+<!-- 
+  The nav bar that will be updated as we navigate between views
+  Additional attributes set its look, ion-nav-bar animation and icons
+  Icons provided by Ionicons: http://ionicons.com/ 
+-->
+<ion-nav-bar class="bar-positive">
+  <ion-nav-back-button class="button-icon button-clear ion-ios7-arrow-back">
+  </ion-nav-back-button>
+</ion-nav-bar>
+
+
+<ion-tabs class="tabs-icon-top tabs-default">
+
+  <!-- Main Tab -->
+  <ion-tab title="Main" icon="icon ion-home" href="#/test/main">
+    <ion-nav-view name="main-test"></ion-nav-view>
+  </ion-tab>
+
+  <!-- Pets Tab -->
+  <ion-tab title="Pets" icon="icon ion-navicon" href="#/test/pets">
+    <ion-nav-view name="pets-test"></ion-nav-view>
+  </ion-tab>
+
+
+  <!-- Adopt Tab -->
+  <ion-tab title="Adopt" icon="icon ion-heart" href="#/test/adopt">
+    <ion-nav-view name="adopt-test"></ion-nav-view>
+  </ion-tab>
+
+
+  <!-- About Tab -->
+  <ion-tab title="About" icon="icon ion-search" href="#/test/about">
+    <ion-nav-view name="about-test"></ion-nav-view>
+  </ion-tab>
+
+
+</ion-tabs>

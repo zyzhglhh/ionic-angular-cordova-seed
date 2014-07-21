@@ -29,6 +29,38 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+    .state('main', {
+      url:'/main',
+      abstract: true,
+      templateUrl: 'templates/main.html'
+    })
+
+    // .state('main.index', {
+    //   url:'/index',
+    //   views: {
+    //     'main-index-header': {
+    //       templateUrl: 'templates/main/header.html'
+    //     },
+    //     'main-index-content': {
+    //       templateUrl: 'templates/main/content.html'
+    //     },
+    //     'main-index-footer': {
+    //       templateUrl: 'templates/main/footer.html'
+    //     }
+    //   }
+    // })
+    
+    .state('main.index', {
+      url:'/index',
+      views: {
+        'main-index': {
+          templateUrl: 'templates/main/index.html'
+        }
+      }
+    });
+
+  $stateProvider
+
     // setup an abstract state for the tabs directive
     .state('tab', {
       url: "/tab",
@@ -87,38 +119,64 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
 
   $stateProvider
 
-    .state('main', {
-      url:'/main',
+    // setup an abstract state for the tabs directive
+    .state('test', {
+      url: "/test",
       abstract: true,
-      templateUrl: 'templates/main.html'
+      templateUrl: "templates/test.html"
     })
 
-    // .state('main.index', {
-    //   url:'/index',
-    //   views: {
-    //     'main-index-header': {
-    //       templateUrl: 'templates/main/header.html'
-    //     },
-    //     'main-index-content': {
-    //       templateUrl: 'templates/main/content.html'
-    //     },
-    //     'main-index-footer': {
-    //       templateUrl: 'templates/main/footer.html'
-    //     }
-    //   }
-    // })
-    
-    .state('main.index', {
-      url:'/index',
+    // the pet tab has its own child nav-view and history
+    .state('test.pet-index', {
+      url: '/pets',
       views: {
-        'main-index': {
-          templateUrl: 'templates/main/index.html'
+        'pets-test': {
+          templateUrl: 'templates/test/pet-index.html',
+          controller: 'PetIndexCtrl'
+        }
+      }
+    })
+
+    .state('test.pet-detail', {
+      url: '/pet/:petId',
+      views: {
+        'pets-test': {
+          templateUrl: 'templates/test/pet-detail.html',
+          controller: 'PetDetailCtrl'
+        }
+      }
+    })
+
+    .state('test.main', {
+      url: '/main',
+      views: {
+        'main-test': {
+          templateUrl: 'templates/test/mainbutton.html',
+          controller: 'MainTab'
+        }
+      }
+    })
+
+    .state('test.adopt', {
+      url: '/adopt',
+      views: {
+        'adopt-test': {
+          templateUrl: 'templates/test/adopt.html'
+        }
+      }
+    })
+
+    .state('test.about', {
+      url: '/about',
+      views: {
+        'about-test': {
+          templateUrl: 'templates/test/about.html'
         }
       }
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/main/index');
+  $urlRouterProvider.otherwise('/test/main');
 
 });
 
