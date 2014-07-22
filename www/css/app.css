@@ -8,7 +8,7 @@
 }
 .box {
 	min-width: 95px;
-	background-color: yellow;
+	/*background-color: yellow;*/
 }
 .img-responsive,
 .thumbnail > img,
