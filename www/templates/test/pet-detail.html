@@ -5,6 +5,9 @@
   The Pets service returns an array of pet data
 -->
 <ion-view title="{{pet.title}}">
+<ion-nav-bar class="bar-positive">
+  <ion-nav-back-button class="button-icon button-clear ion-ios7-arrow-back"></ion-nav-back-button>
+</ion-nav-bar>
   <ion-content padding="true">
     <p>{{ pet.description }}</p>
     <p><a class="button button-small icon ion-arrow-left-b" href="#/test/pets"> All Pets</a></p>

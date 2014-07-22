@@ -1,8 +1,26 @@
 /* Your app's CSS, go crazy, make it your own */
 
 .ionic-logo {
-  display: block;
-  margin: 15px auto;
-  width: 96px;
-  height: 96px;
+	display: block;
+	margin: 15px auto;
+	width: 96px;
+	height: 96px;
+}
+.box {
+	min-width: 95px;
+	background-color: yellow;
+}
+.img-responsive,
+.thumbnail > img,
+.thumbnail a > img,
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+.center-block {
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
 }

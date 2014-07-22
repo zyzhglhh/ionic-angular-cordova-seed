@@ -33,28 +33,29 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       url:'/main',
       abstract: true,
       templateUrl: 'templates/main.html'
+      //,controller: 'MainView'
     })
 
-    // .state('main.index', {
-    //   url:'/index',
+    // .state('main.default', {
+    //   url:'/default',
     //   views: {
-    //     'main-index-header': {
+    //     'main-default-header': {
     //       templateUrl: 'templates/main/header.html'
     //     },
-    //     'main-index-content': {
+    //     'main-default-content': {
     //       templateUrl: 'templates/main/content.html'
     //     },
-    //     'main-index-footer': {
+    //     'main-default-footer': {
     //       templateUrl: 'templates/main/footer.html'
     //     }
     //   }
     // })
     
-    .state('main.index', {
-      url:'/index',
+    .state('main.default', {
+      url:'/default',
       views: {
-        'main-index': {
-          templateUrl: 'templates/main/index.html'
+        'main-default': {
+          templateUrl: 'templates/main/default.html'
         }
       }
     });
@@ -176,7 +177,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/test/main');
+  $urlRouterProvider.otherwise('/main/default');
 
 });
 
