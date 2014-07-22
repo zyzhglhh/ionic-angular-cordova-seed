@@ -7,8 +7,8 @@
 	height: 96px;
 }
 .box {
-	min-width: 95px;
-	/*background-color: yellow;*/
+/*	min-height: 90px;
+	background-color: red;*/
 }
 .img-responsive,
 .thumbnail > img,
@@ -23,4 +23,38 @@
 	display: block;
 	margin-right: auto;
 	margin-left: auto;
+}
+.word-front {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 10;
+	padding-top: 20px;
+	padding-bottom: 8px;
+	/*color: #fff;*/
+	text-align: center;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
+}
+@media screen and (min-width: 768px) {
+  .word-front {
+    right: 20%;
+    left: 20%;
+    padding-bottom: 30px;
+  }
+}
+.word-front h3, .word-front h4 {
+	font-family: "微软雅黑";
+	font-weight: bold;
+	color: #FFF9F9;
+}
+.word-front h4 {
+	color: #fff;
+	margin-bottom: 0;
+}
+.no-padding {
+	padding: 0;
+}
+.slider-pager {
+	display: none;
 }

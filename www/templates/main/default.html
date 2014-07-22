@@ -1,32 +1,63 @@
 <ion-view>
+
+  <div class="bar bar-header bar-light hide">
+    <h1 class="title">Hidden Bar</h1>
+  </div>
+
   <ion-content>
-    <ion-slide-box does-continue="true" slide-interval="3000">
+
+    <ion-slide-box does-continue="false" slide-interval="3000">
       <ion-slide>
-        <div class="box blue">
+        <div class="box">
           <img src="img/mainImg3.png" class="img-responsive center-block">
+          <div class="word-front center-block">
+            <h3>建设美丽浙江 创造美好生活</h3>
+            <h4>浙江省直机关“智慧团青”APP</h4>
+          </div>
         </div>
       </ion-slide>
-      <ion-slide>
-        <div class="box yellow">
+      <!-- <ion-slide>
+        <div class="box">
           <img src="img/mainImg5.png" class="img-responsive center-block">
+          <div class="word-front center-block">
+            <h3>建设美丽浙江 创造美好生活</h3>
+            <h4>浙江省直机关“智慧团青”APP</h4>
+          </div>
         </div>
-      </ion-slide>
+      </ion-slide> -->
     </ion-slide-box>
 
+    <div class="row">
+      <div class="col"><a class="button center-block" href="#">团青时讯</a></div>
+      <div class="col"><a class="button center-block" href="#">智汇共享</a></div>
+      <div class="col"><a class="button center-block" href="#">智慧链接</a></div>
+    </div>
+    <div class="row">
+      <div class="col"><a class="button center-block" href="#">一团一品</a></div>
+      <div class="col"><a class="button center-block" href="#">青年创业</a></div>
+      <div class="col"><a class="button center-block" href="#">智会相亲</a></div>
+    </div>
+    <div class="row">
+      <div class="col"><a class="button center-block" href="#">最美浙江</a></div>
+      <div class="col"><a class="button center-block" href="#">智惠生活</a></div>
+      <div class="col"><a class="button center-block" href="#">系统管理</a></div>
+    </div>
+
   </ion-content>
-  <ion-footer-bar class="bar-stable">
+
+  <ion-footer-bar class="bar-stable no-padding">
     <div class="tabs tabs-icon-top">
       <a class="tab-item" href="#">
         <i class="icon ion-ios7-home"></i>
         首页
       </a>
       <a class="tab-item" href="#">
-        <i class="icon ion-planet"></i>
-        Favorites
+        <i class="icon ion-star"></i>
+        收藏
       </a>
       <a class="tab-item" href="#">
         <i class="icon ion-gear-a"></i>
-        Settings
+        管理
       </a>
       <a class="tab-item" href="#">
         <i class="icon ion-person"></i>
@@ -34,4 +65,5 @@
       </a>
     </div>
   </ion-footer-bar>
+
 </ion-view>
