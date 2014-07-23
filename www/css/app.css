@@ -72,7 +72,10 @@
 }
 
 .text-lg {
-	font-size: 120%;
+	font-size: 110%;
+}
+.text-hg {
+	font-size: 150%;
 }
 .take-position {
 	color: transparent;
