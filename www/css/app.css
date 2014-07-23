@@ -30,8 +30,8 @@
 	bottom: 0;
 	left: 0;
 	z-index: 10;
-	padding-top: 20px;
-	padding-bottom: 8px;
+	padding-top: 1.25em;
+	padding-bottom: 0.5em;
 	/*color: #fff;*/
 	text-align: center;
 	text-shadow: 0 1px 2px rgba(0, 0, 0, .6);
@@ -40,7 +40,7 @@
   .word-front {
     right: 20%;
     left: 20%;
-    padding-bottom: 30px;
+    padding-bottom: 1.875em;
   }
 }
 .word-front h3, .word-front h4 {
@@ -57,4 +57,23 @@
 }
 .slider-pager {
 	display: none;
+}
+
+
+.background-clear, .button.background-clear.active, .button.background-clear.activated {
+	background-color: transparent;
+	border-style: none;
+	box-shadow: none; 
+}
+.cell-img {
+	background-color: transparent;
+	max-width: 4em;
+	padding: 0.5em 0 0 0;
+}
+
+.text-lg {
+	font-size: 120%;
+}
+.take-position {
+	color: transparent;
 }

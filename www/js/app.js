@@ -32,8 +32,8 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
     .state('main', {
       url:'/main',
       abstract: true,
-      templateUrl: 'templates/main.html'
-      //,controller: 'MainView'
+      templateUrl: 'templates/main.html',
+      controller: 'mainDefault'
     })
 
     // .state('main.default', {
