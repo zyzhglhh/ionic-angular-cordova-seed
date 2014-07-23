@@ -16,7 +16,7 @@
         <span class="input-label text-lg">密<span class="take-position">占</span>码:</span>
           <input type="password" placeholder="8-16位" ng-model="loginData.password">
         </label>
-        <div class="item item-toggle text-right">
+        <!-- <div class="item item-toggle text-right">
           <span>记住密码</span>
           <label class="toggle toggle-positive">
             <input type="checkbox">        
@@ -24,7 +24,8 @@
               <div class="handle"></div>
             </div>
           </label>
-        </div>
+        </div> -->
+        <ion-toggle ng-model="rememberPwd" toggle-class="toggle-positive" class="text-right">记住密码</ion-toggle>
         <label class="item">
           <button class="button button-block button-positive text-lg" type="submit">登录</button>
         </label>
