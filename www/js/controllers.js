@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 //登录窗口控制器
-.controller('mainDefault', function($scope, $ionicModal, $timeout) {
+.controller('mainDefault', function($scope, $ionicModal, $ionicAnimation, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -22,6 +22,11 @@ angular.module('starter.controllers', [])
     $scope.modal.show();
   };
 
+  $scope.preRegister = function() {
+    $scope.closeLogin();
+    
+  };
+
   // Perform the login action when the user submits the login form
   $scope.doLogin = function() {
     console.log('正在登录', $scope.loginData);
@@ -34,14 +39,61 @@ angular.module('starter.controllers', [])
   };
 
   $scope.$on('modal.removed', function() {
-  	$scope.loginData = {};
-	$ionicModal.fromTemplateUrl('templates/main/login.html', {
-	  scope: $scope
-	}).then(function(modal) {
-	  $scope.modal = modal;
-	});
+    $scope.loginData = {};
+  	$ionicModal.fromTemplateUrl('templates/main/login.html', {
+  	  scope: $scope
+  	}).then(function(modal) {
+  	  $scope.modal = modal;
+  	});
   });
 })
+
+.controller('UserRegister', function($scope, $rootScope, $ionicAnimation) {
+
+})
+
+//.controller('register', function($scope, $ionicModal, $timeout) {})
+// .controller('register', function($scope, $ionicModal, $timeout) {
+//   // Form data for the login modal
+//   $scope.registerData = {};
+
+//   // Create the login modal that we will use later
+//   $ionicModal.fromTemplateUrl('templates/main/register.html', {
+//     scope: $scope
+//   }).then(function(modal) {
+//     $scope.modal = modal;
+//   });
+
+//   // Triggered in the login modal to close it
+//   $scope.closeRegister = function() {
+//     $scope.modal.hide();
+//   },
+
+//   // Open the login modal
+//   $scope.register = function() {
+//     $scope.modal.show();
+//   };
+
+//   // Perform the login action when the user submits the login form
+//   $scope.doRegister = function() {
+//     console.log('正在登录', $scope.registerData);
+
+//     // Simulate a login delay. Remove this and replace with your login
+//     // code if using a login system
+//     $timeout(function() {
+//       $scope.modal.remove();
+//     }, 1000);
+//   };
+
+//   $scope.$on('modal.removed', function() {
+//     $scope.registerData = {};
+//     $ionicModal.fromTemplateUrl('templates/main/register.html', {
+//       scope: $scope
+//     }).then(function(modal) {
+//       $scope.modal = modal;
+//     });
+//   });
+// })
 
 
 // A simple controller that fetches a list of data from a service

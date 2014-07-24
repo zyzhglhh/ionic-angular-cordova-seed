@@ -58,6 +58,16 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
           templateUrl: 'templates/main/default.html'
         }
       }
+    })
+
+    .state('main.register', {
+      url:'/register',
+      views: {
+        'main-default': {
+          templateUrl: 'templates/main/register.html',
+          controller: 'UserRegister'
+        }
+      }
     });
 
   $stateProvider

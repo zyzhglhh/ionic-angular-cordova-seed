@@ -55,6 +55,10 @@
 .no-padding {
 	padding: 0;
 }
+.no-padding-td {
+	padding-top: 0;
+	padding-bottom: 0;
+}
 .slider-pager {
 	display: none;
 }
@@ -84,10 +88,11 @@
 }
 
 .text-lg {
-	font-size: 110%;
+	font-size: 150%;
 }
 .text-hg {
 	font-size: 150%;
+	min-width: 33%;
 }
 .take-position {
 	color: transparent;
