@@ -65,9 +65,14 @@
 	border-style: none;
 	box-shadow: none; 
 }
+.position {
+	position: relative;
+	top: 0;
+	left: 0;
+}
 .background-img {
 	position: absolute;
-    top: 5em;
+    top: 0;
     left: 0;
     right: 0;
     z-index: -999;
