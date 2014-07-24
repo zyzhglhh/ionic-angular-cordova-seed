@@ -65,6 +65,13 @@
 	border-style: none;
 	box-shadow: none; 
 }
+.background-img {
+	position: absolute;
+    top: 5em;
+    left: 0;
+    right: 0;
+    z-index: -999;
+}
 .cell-img {
 	background-color: transparent;
 	max-width: 4em;
