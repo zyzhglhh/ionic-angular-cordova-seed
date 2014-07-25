@@ -3,17 +3,36 @@
 -->
 <ion-view title="Adopt A Pet">
   <ion-content>
-    <div class="list list-inset">
-      <label class="item item-input">
-        <span class="input-label">Your name</span>
-        <input type="text">
-      </label>
-      <label class="item item-input">
-        <span class="input-label">Your email</span>
-        <input type="email">
-      </label>
-      <ion-toggle>Subscribe To Newsletter</ion-toggle>
-      <button class="button button-positive button-block">Adopt</button>
+    <div ng-controller="Sandcrawler">
+      <p>Location: {{location}}</p>
+      <button ng-click="move('Mos Eisley South')">Move</button>
+      <div ng-controller="Droid">
+        <p>Location: {{location}}</p>
+        <button ng-click="sell('Owen Farm')">Sell</button>
+      </div>
+    </div>
+
+
+    <div ng-controller="Sandcrawler1">
+      <div ng-controller="Droid1">
+          <h2>R2-D2</h2>
+          <p>Droid Location: {{location}}</p>
+          <button ng-click="recallAllDroids()">Recall All Droids</button>
+      </div>
+      <div ng-controller="Droid2">
+          <h2>C-3PO</h2>
+          <p>Droid Location: {{location}}</p>
+          <button ng-click="recallAllDroids()">Recall All Droids</button>
+      </div>
+    </div>
+
+
+    <div ng-controller="MainCtrl">
+      <input type="text" ng-model="test" />    
+      <button ng-click="change()">click me</button>
+    </div>
+    <div ng-controller="sideCtrl">
+      <button ng-click="add()">my name {{name}}</button>
     </div>
   </ion-content>
 </ion-view>

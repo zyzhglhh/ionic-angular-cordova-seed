@@ -9,22 +9,22 @@ angular.module('starter.controllers', [])
   $ionicModal.fromTemplateUrl('templates/main/login.html', {
     scope: $scope
   }).then(function(modal) {
-    $scope.modal = modal;
+    $scope.loginmodal = modal;
   });
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
-    $scope.modal.hide();
+    $scope.loginmodal.hide();
   },
 
   // Open the login modal
   $scope.login = function() {
-    $scope.modal.show();
+    $scope.loginmodal.show();
   };
 
   $scope.preRegister = function() {
     $scope.closeLogin();
-    
+    $scope.register();
   };
 
   // Perform the login action when the user submits the login form
@@ -34,23 +34,65 @@ angular.module('starter.controllers', [])
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
     $timeout(function() {
-      $scope.modal.remove();
+      $scope.loginmodal.remove();
+      $scope.loginData = {};
+      $ionicModal.fromTemplateUrl('templates/main/login.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.loginmodal = modal;
+      });
     }, 1000);
   };
 
-  $scope.$on('modal.removed', function() {
-    $scope.loginData = {};
-  	$ionicModal.fromTemplateUrl('templates/main/login.html', {
-  	  scope: $scope
-  	}).then(function(modal) {
-  	  $scope.modal = modal;
-  	});
+
+
+
+  $scope.registerData = {};
+
+  // Create the login modal that we will use later
+  $ionicModal.fromTemplateUrl('templates/main/register.html', {
+    scope: $scope
+  }).then(function(modal) {
+    $scope.registermodal = modal;
   });
+
+  // Triggered in the login modal to close it
+  $scope.closeRegister = function() {
+    $scope.registermodal.hide();
+  },
+
+  // Open the login modal
+  $scope.register = function() {
+    $scope.registermodal.show();
+  };
+
+  $scope.prelogin = function() {
+    $scope.closeRegister();
+    $scope.login();
+  };
+
+  // Perform the login action when the user submits the login form
+  $scope.doRegister = function() {
+    console.log('正在注册', $scope.registerData);
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.registermodal.remove();
+      $scope.registerData = {};
+      $ionicModal.fromTemplateUrl('templates/main/register.html', {
+        scope: $scope
+      }).then(function(modal) {
+        $scope.registermodal = modal;
+      });
+    }, 1000);
+  };
+
 })
 
-.controller('UserRegister', function($scope, $rootScope, $ionicAnimation) {
+// .controller('UserRegister', function($scope, $rootScope, $ionicAnimation) {
 
-})
+// })
 
 //.controller('register', function($scope, $ionicModal, $timeout) {})
 // .controller('register', function($scope, $ionicModal, $timeout) {

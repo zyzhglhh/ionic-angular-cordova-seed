@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.test.controllers', 'starter.test.services', 'w5c.validator'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -60,15 +60,16 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
       }
     })
 
-    .state('main.register', {
-      url:'/register',
-      views: {
-        'main-default': {
-          templateUrl: 'templates/main/register.html',
-          controller: 'UserRegister'
-        }
-      }
-    });
+    // .state('main.register', {
+    //   url:'/register',
+    //   views: {
+    //     'main-default': {
+    //       templateUrl: 'templates/main/register.html',
+    //       controller: 'UserRegister'
+    //     }
+    //   }
+    // })
+    ;
 
   $stateProvider
 
@@ -189,5 +190,34 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers'])
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/main/default');
 
-});
+})
+
+.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
+
+     // 全局配置
+     w5cValidatorProvider.config({
+         blurTrig   : false,
+         showError  : true,
+         removeError: true
+
+     });
+     w5cValidatorProvider.setRules({
+         email   : {
+             required: "输入的邮箱地址不能为空",
+             email   : "输入邮箱地址格式不正确"
+         },
+         username: {
+             required: "输入的用户名不能为空",
+             pattern : "用户名必须输入字母、数字、下划线,以字母开头"
+         },
+         password: {
+             required : "密码不能为空",
+             minlength: "密码长度不能小于{minlength}",
+             maxlength: "密码长度不能大于{maxlength}"
+         },
+         number  : {
+             required: "数字不能为空"
+         }
+     });
+ }]);;
 
