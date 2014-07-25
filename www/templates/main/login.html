@@ -6,18 +6,19 @@
     <h1 class="title text-lg">请登录</h1>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin()">
+    <form class="form-horizontal w5c-form" w5c-form-validate="" w5c-submit="doLogin()" role="form" novalidate name="form_user_signin">
       <ion-list>
         <ion-item>
           <label class="item-input">
             <span class="input-label text-lg">用户名:</span>
-            <input type="text" placeholder="4-6位" ng-model="loginData.username">
+            <!-- <input type="text" autofocus="" placeholder="请输入用户名" w5c-unique-check="{url:'/check?username={{loginData.username}}'}" ng-model="loginData.username" required="" name="username" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{1,19}$/"> -->
+            <input type="text" autofocus="" placeholder="请输入用户名" ng-model="loginData.username" required="" name="username" ng-pattern="/^[A-Za-z]{1}[0-9A-Za-z_]{1,19}$/">
           </label>
         </ion-item>
         <ion-item>
           <label class="item-input">
             <span class="input-label text-lg">密<span class="take-position">占</span>码:</span>
-            <input type="password" placeholder="8-16位" ng-model="loginData.password">
+            <input type="password" placeholder="8-16位" ng-model="loginData.password" required="" name="password" ng-minlength="8" ng-maxlength="16">
           </label>
         </ion-item>
         <!-- <div class="item item-toggle text-right">

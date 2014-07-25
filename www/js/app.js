@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'starter.test.controllers', 'starter.test.services', 'w5c.validator'])
 
-.run(function($ionicPlatform) {
+.run(['$ionicPlatform', function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -19,9 +19,9 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
       StatusBar.styleDefault();
     }
   });
-})
+}])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -190,9 +190,9 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/main/default');
 
-})
+}])
 
-.config(["w5cValidatorProvider", function (w5cValidatorProvider) {
+.config(['w5cValidatorProvider', function (w5cValidatorProvider) {
 
      // 全局配置
      w5cValidatorProvider.config({
@@ -215,9 +215,19 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
              minlength: "密码长度不能小于{minlength}",
              maxlength: "密码长度不能大于{maxlength}"
          },
-         number  : {
-             required: "数字不能为空"
+         repeat_password  : {
+                repeat: "两次填写的密码不一致"
+         },
+         chinese_name : {
+             required : "姓名不能为空",
+             pattern  : "请正确输入中文姓名"
+         },
+         mobile  : {
+             required: "手机号不能为空",
+             pattern : "请填写正确手机号",
+             minlength: "手机号长度不能小于{minlength}",
+             maxlength: "手机号长度不能大于{maxlength}"
          }
      });
- }]);;
+ }]);
 
