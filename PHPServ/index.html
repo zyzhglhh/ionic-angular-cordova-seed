@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <!--
+    1.cookie和session设置及校验
+    2.实现“记住我”功能
+    3.完成登录跳转功能
+    4.去掉chrome自动记录用户名（保留也可）
+    5.去掉chrome离开表单弹出框（已消失，原因不明）
+    -->
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, height=device-height" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="description" content="checkin">
+    <meta name="author" content="Alex">
+    <!-- <link rel="shortcut icon" href="../../docs-assets/ico/favicon.png">
+    -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
+
+    <title>Signin</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/signin.css" rel="stylesheet">
+
+    <style type="text/css">
+        #servaddr {
+            margin: 0.5em auto;
+            min-width: 50%;
+            min-height: 1.5em;
+        }
+    </style>
+
+    <!--link rel="stylesheet" href="/bootstrap/dist/css/custom/mine.css"-->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]>
+    <script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script>
+    <![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.min.js"></script>
+    <script src="http://cdn.bootcss.com/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+
+    <div class="container">
+
+        <form class="form-signin" role="form" id="frmRegister" method="post" action="javascript:login();void(0);">
+            <h2 class="form-signin-heading">请登录</h2>
+            <div class="form-group register">
+                <input type="text" class="form-control login-reg" placeholder="用户名(长度2-16位,必填)" name="username" id="username" required autofocus>
+                <input type="password" class="form-control pwd login-reg bottom-radius" placeholder="密码(长度3-16位,必填)" name="pwd" id="pwd" required>
+                <input type="password" class="form-control pwd-again reg hidden" placeholder="重复密码,必填" name="pwd-again" id="pwd-again">
+            </div>
+            <input type="text" class="form-control reg hidden" placeholder="请输入您的姓名(必填)" name="name" id="name">
+            <input type="tel" class="form-control reg hidden" placeholder="请输入您的手机" name="mobi" id="mobi">
+            <input type="email" class="form-control reg hidden" placeholder="请输入您的Email" name="email" id="email">
+            <label class="checkbox remember-me">
+                <input type="checkbox" name="keepinfo" value="remember-me" id="remember">记住我</label>
+            <button class="btn btn-lg btn-primary login" type="submit" id="login">登录</button>
+            <button class="btn btn-lg btn-warning reg hidden" type="submit" id="submit">提交</button>
+            <button class="btn btn-lg btn-info" type="reset" id="reset">重置</button>
+            <button class="btn btn-lg btn-default reg hidden" type="button" id="back2login">返回</button>
+            <button class="btn btn-lg btn-default login disabled" type="button" id="register">注册</button>
+        </form>
+        <input type="text" class="center-block servaddr" placeholder="请输入服务器IP地址" name="servaddr" id="servaddr" value="10.12.43.168">
+        <button class="btn btn-warning center-block" type="button" id="ipaddr">保存IP</button>
+
+        <p>
+            1. 先输入服务器IP地址(10.12.43.168,确保能上校内网);
+            <br>        
+            2. 点击保存IP按钮;
+            <br>        
+            3. 新用户注册、提交;
+            <br>        
+            4. 输入密码登录系统(勾选保存密码);
+            <br>        
+            5. 确保打开GPS定位功能;
+            <br>        
+            6. 点击我到了按钮等待扫码签到按钮出现;
+            <br>
+            7. 点击扫码签到按钮并扫描二维码进行签到。
+        </p>
+
+    </div>
+    <!-- /container -->
+
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="dist/js/1.10.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="dist/js/bootstrap.min.js"></script>
+    <script src="dist/js/md5.js"></script>
+    <script src="js/script.js"></script>
+    <!-- scripts concatenated and minified via ant build script-->
+    <!--script>
+
+        //alert("hello1");
+        //alert("last_pid");
+
+        /*function loaded() {
+            alert("hello2");
+            if( kget('op_domain') != null ) $('#domain').val(kget('op_domain'));
+            if( kget('op_email') != null ) $('#email').val(kget('op_email'));
+            if( kget('op_password') != null ) $('#password').val(kget('op_password'));
+            //alert($('#password').val());
+            if( kget('op_domain') != null && kget('op_email') != null && kget('op_password') != null ) {
+                login();
+            }       
+        }
+
+        document.addEventListener('DOMContentLoaded', loaded, false);*/
+
+        //$(document).bind('DOMContentLoaded', loaded);
+
+    </script-->
+
+    <script type="text/javascript" src="cordova.js"></script>
+    <!--script type="text/javascript" src="js/index.js"></script-->
+    <script src="js/customs.js"></script>
+</body>
+</html>

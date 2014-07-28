@@ -1,4 +1,4 @@
-angular.module('starter.test.services', [])
+angular.module('test.services', [])
 
 /**
  * A simple example service that returns some data.

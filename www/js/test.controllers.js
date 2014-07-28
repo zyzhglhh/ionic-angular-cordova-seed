@@ -1,4 +1,4 @@
-angular.module('starter.test.controllers', [])
+angular.module('test.controllers', [])
 
 //登录窗口控制器
 .controller('Sandcrawler', function($scope) {

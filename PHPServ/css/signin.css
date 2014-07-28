@@ -1,0 +1,60 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 100%;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.register input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+/*.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}*/
+
+.form-signin .half-width {
+  /*display: block;*/
+  /*min-width: 47%;*/
+}
+.register .pwd {
+  border-radius: 0;
+  margin-bottom: -1px;
+}
+.register .pwd-again {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.register {
+  margin-bottom: 10px;
+}
+.register .bottom-radius {  /*如果只有一个类选择器.bottom-redius，优先级不如两个类选择器.register .pwd高，因此radius还是0，不会被改变，要在.bottom-redius之前再加上.register，因为这条css在后面，才能覆盖前面的css*/
+  border-bottom-left-radius: 0.25em;
+  border-bottom-right-radius: 0.25em;
+}
