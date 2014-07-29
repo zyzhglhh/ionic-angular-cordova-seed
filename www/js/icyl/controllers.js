@@ -5,7 +5,9 @@ angular.module('icyl.controllers', [])
             ['$scope', '$ionicModal', '$ionicAnimation', 'Storage', 'Data', 'Alert', '$timeout', 
             function($scope, $ionicModal, $ionicAnimation, Storage, Data, Alert, $timeout) {
   // Form data for the login modal
-  $scope.loginData = {};
+  $scope.loginData = {
+    rememberPwd: false
+  };
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/main/login.html', {
@@ -33,17 +35,41 @@ angular.module('icyl.controllers', [])
   $scope.doLogin = function() {
     console.log('正在登录', $scope.loginData);
 
+    Data.User.signin($scope.loginData, function(data) {
+
+    if (data.err_code == 0) { 
+        Alert(data.data.user + '，欢迎回来！' ); 
+        $scope.loginmodal.remove();
+        $scope.loginData = {};
+        $ionicModal.fromTemplateUrl('templates/main/login.html', {
+         scope: $scope
+        }).then(function(modal) {
+         $scope.loginmodal = modal;
+        });
+        if ($scope.loginData.rememberPwd == true) {
+          Storage.kset('username', data.data.user);
+          Storage.kset('password', data.data.password);
+        } 
+      }
+      else {
+        Alert(data.err_code + '：' + data.err_msg);
+        $scope.loginData = {};
+      }
+    }, function(err){
+        console.log(' request fail !!!! ' + err);
+    });
+
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
-    $timeout(function() {
-      $scope.loginmodal.remove();
-      $scope.loginData = {};
-      $ionicModal.fromTemplateUrl('templates/main/login.html', {
-        scope: $scope
-      }).then(function(modal) {
-        $scope.loginmodal = modal;
-      });
-    }, 1000);
+    // $timeout(function() {
+    //   $scope.loginmodal.remove();
+    //   $scope.loginData = {};
+    //   $ionicModal.fromTemplateUrl('templates/main/login.html', {
+    //     scope: $scope
+    //   }).then(function(modal) {
+    //     $scope.loginmodal = modal;
+    //   });
+    // }, 1000);
   };
 
 
@@ -54,9 +80,8 @@ angular.module('icyl.controllers', [])
     //password: '123456789',
     //repeatpassword: '123456789',
     //name: '周天舒',
-    gender: false,
-    //genderFlag: false,
-    //mobile: '13282037883'
+    //mobile: '13282037883',
+    gender: false
   };
 
   //Alert(registerData.gender);
@@ -91,16 +116,24 @@ angular.module('icyl.controllers', [])
 
     Data.User.signup($scope.registerData, function(data) {
       //Alert($scope.registerData.genderFlag);
-      $scope.registermodal.remove();
-      $scope.registerData = {};
-      $scope.registerData.gender = false;
-      $ionicModal.fromTemplateUrl('templates/main/register.html', {
-       scope: $scope
-      }).then(function(modal) {
-       $scope.registermodal = modal;
-      });
-      Alert(data.data.user + ' 注册成功，用户名：' + data.data.username );
-      $scope.login();
+      
+      if (data.err_code == 0) { 
+        Alert(data.data.user + ' 注册成功，用户名：' + data.data.username ); 
+        $scope.registermodal.remove();
+        $scope.registerData = {};
+        $scope.registerData.gender = false;
+        $ionicModal.fromTemplateUrl('templates/main/register.html', {
+         scope: $scope
+        }).then(function(modal) {
+         $scope.registermodal = modal;
+        });
+        $scope.login(); 
+      }
+      else {
+        Alert(data.err_code + '：' + data.err_msg);
+        $scope.registerData = {};
+        $scope.registerData.gender = false;
+      }
     }, function(err){
         console.log(' request fail !!!! ' + err);
     });

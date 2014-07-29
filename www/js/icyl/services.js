@@ -21,13 +21,13 @@ angular.module('icyl.services', ['ngResource'])
       User: $resource('http://:baseurl/:path/lp.php' 
                       ,{baseurl:'localhost'
                       , path:'PHPServ'
-                      //, callback: 'JSON_CALLBACK' 
+                      , callback: 'JSON_CALLBACK' 
                       } 
                       ,{
-                          signin: {method:'POST', params:{c:'user', a:'get_token'}}
-                        , signup: {method:'POST', params:{c:'user', a:'register'}}
-                        //,signin: {method:'JSONP', params:{c:'user', a:'get_token'}}
-                        //,signup: {method:'JSONP', params:{c:'user', a:'register'}}
+                          //signin: {method:'POST', params:{c:'user', a:'get_token'}}
+                        //, signup: {method:'POST', params:{c:'user', a:'register'}}
+                        signin: {method:'JSONP', params:{c:'user', a:'get_token'}}
+                        ,signup: {method:'JSONP', params:{c:'user', a:'register'}}
                         , update_detail: {method:'POST'}
                         , update_avatar: {method:'POST'}
                         , update_mobile: {method:'POST'}
