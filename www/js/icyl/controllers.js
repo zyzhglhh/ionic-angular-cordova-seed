@@ -1,7 +1,9 @@
-angular.module('starter.controllers', [])
+angular.module('icyl.controllers', [])
 
 //登录窗口控制器
-.controller('mainDefault', function($scope, $ionicModal, $ionicAnimation, $timeout) {
+.controller('mainDefault', 
+            ['$scope', '$ionicModal', '$ionicAnimation', 'Storage', 'Data', 'Alert', '$timeout', 
+            function($scope, $ionicModal, $ionicAnimation, Storage, Data, Alert, $timeout) {
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -47,7 +49,17 @@ angular.module('starter.controllers', [])
 
 
 
-  $scope.registerData = {};
+  $scope.registerData = {
+    username: 'alexgzhou',
+    password: '123456789',
+    repeatpassword: '123456789',
+    name: '周天舒',
+    gender: false,
+    //genderFlag: false,
+    mobile: '13282037883'
+  };
+
+  //Alert(registerData.gender);
 
   // Create the login modal that we will use later
   $ionicModal.fromTemplateUrl('templates/main/register.html', {
@@ -71,24 +83,38 @@ angular.module('starter.controllers', [])
     $scope.login();
   };
 
-  // Perform the login action when the user submits the login form
+  // Perform the register action when the user submits the register form
   $scope.doRegister = function() {
+    //$scope.registerData.gender = $scope.registerData.genderFlag ? '女': '男';
+
     console.log('正在注册', $scope.registerData);
+
+    Data.User.signup($scope.registerData, function(data) {
+      //Alert($scope.registerData.genderFlag);
+      $scope.registermodal.remove();
+      //$scope.registerData = {};
+      $ionicModal.fromTemplateUrl('templates/main/register.html', {
+       scope: $scope
+      }).then(function(modal) {
+       $scope.registermodal = modal;
+      });
+      $scope.login();
+    });
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system
-    $timeout(function() {
-      $scope.registermodal.remove();
-      $scope.registerData = {};
-      $ionicModal.fromTemplateUrl('templates/main/register.html', {
-        scope: $scope
-      }).then(function(modal) {
-        $scope.registermodal = modal;
-      });
-    }, 1000);
+    // $timeout(function() {
+    //   $scope.registermodal.remove();
+    //   $scope.registerData = {};
+    //   $ionicModal.fromTemplateUrl('templates/main/register.html', {
+    //     scope: $scope
+    //   }).then(function(modal) {
+    //     $scope.registermodal = modal;
+    //   });
+    // }, 1000);
   };
 
-})
+}])
 
 // .controller('UserRegister', function($scope, $rootScope, $ionicAnimation) {
 
@@ -136,20 +162,6 @@ angular.module('starter.controllers', [])
 //     });
 //   });
 // })
-
-
-// A simple controller that fetches a list of data from a service
-.controller('PetIndexCtrl', function($scope, PetService) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pets = PetService.all();
-})
-
-
-// A simple controller that shows a tapped item's data
-.controller('PetDetailCtrl', function($scope, $stateParams, PetService) {
-  // "Pets" is a service returning mock data (services.js)
-  $scope.pet = PetService.get($stateParams.petId);
-})
 
 
 .controller('MainTab', function($scope, $rootScope) {

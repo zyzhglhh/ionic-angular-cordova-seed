@@ -160,8 +160,8 @@ class userController extends appController
 		$confirmpassword = z(t(v('confirmpwd')));
 		$name = z(t(v('name')));
     	$mobi = z(t(v('mobi')));
-    	$email = z(t(v('email')));
-    	$celluuid = z(t(v('celluuid')));
+    	//$email = z(t(v('email')));
+    	//$celluuid = z(t(v('celluuid')));
 
     	$actnum="";
 
@@ -564,95 +564,6 @@ class userController extends appController
 		else return $this->send_error( OP_API_LEVEL_ERROR , 'U CAN DELETE YOUR PATH ONLY' );
 	}
 	
-	public function path_list()
-	{
-		
-		$since_id = intval( v('since_id') );
-		if( $since_id > 0 ) $since_sql = " AND `id` < '" . intval( $since_id ) . "' ";
-		else
-		{
-			$since_sql = "";
-			
-			$max_id = intval( v('max_id') );
-			if( $max_id > 0 ) $max_sql = " AND `id` < '" . intval( $max_id ) . "' ";
-			else $max_sql = "";
-
-		} 
-		
-		
-				
-		$count = intval( v('count') );
-		
-		if( $count < 1 ) $count = 10;
-		
-		$sql = "SELECT * FROM `path` WHERE 1 " . $since_sql . " " . $max_sql . " ORDER BY `id` DESC LIMIT " . $count ;
-		
-		if( !$fdata = get_data( $sql ) )
-		{
-			if( mysql_errno() != 0 )
-				return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-			else
-				return $this->send_error( OP_API_DB_EMPTY_RESULT , 'NO DATA RETURN '  );	
-		}
-		
-		$fitem = reset( $fdata );
-		$max = $min = $fitem['id'];
-		
-		foreach( $fdata as $item )
-		{
-			$uids[] = $item['uid'];
-			$umap[$item['uid']][] = $item['id'];
-			$rdata[$item['id']] = $item;
-			
-			if( $item['id'] > $max ) $max = $item['id'];
-			if( $item['id'] < $min ) $min = $item['id'];	
-		}
-		
-		//echo "umap: ";
-		//print_r( $umap );
-		
-		if( isset( $uids ) )
-		{
-			$sql = "SELECT `id` , `name` , `timeline` , `level`, `cover` , `picture` FROM `user` WHERE `id` IN ( " . join( ' , ' , $uids ) . " )";
-			
-			if( $udata = get_data( $sql ) )
-			{
-				
-				//echo "udata: ";
-				//print_r( $udata );
-				
-				foreach( $udata as $uitem )
-				{
-					
-					if( isset( $umap[$uitem['id']] ) && is_array( $umap[$uitem['id']] ) )
-					{
-						foreach( $umap[$uitem['id']] as $itemid )
-						{
-							//echo "itemid  =  " . $itemid . "  ";
-							
-							$rdata[$itemid]['user'] = $uitem;
-												
-						}
-					}
-				}
-			}
-		}
-		
-		//print_r( $rdata );
-		
-		// jquery-tmpl can't render the data array with numeric index
-		// so i have to do this make it happy
-		$result['items'] = array_values($rdata);
-		$result['max'] = $max;
-		$result['min'] = $min;
-		$result['refresh_time'] = date("m月d日 H:i");
-		
-		
-		
-		return $this->send_result( $result ); 
-		
-		
-	}
 	
 	
 	private function check_token()

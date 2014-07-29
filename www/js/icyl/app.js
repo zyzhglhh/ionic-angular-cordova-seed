@@ -5,15 +5,18 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', 
-  ['ionic', 
-   'starter.services', 
-   'starter.controllers', 
-   'starter.test.controllers', 
-   'starter.test.services', 
-   'w5c.validator',
-   'storage.services'
-  ])
+
+var dependencies = ['ionic'
+                   ,'icyl.services'
+                   //,'icyl.directives'
+                   //,'icyl.filters'
+                   ,'icyl.controllers'
+                   //,'icyl.controllers.users'
+                   ,'icyl.controllers.test'
+                   ,'icyl.services.test'
+                   ,'w5c.validator'];
+
+angular.module('icyl', dependencies)
 
 .run(['$ionicPlatform', function($ionicPlatform) {
   $ionicPlatform.ready(function() {
