@@ -72,6 +72,6 @@ $(document).ready(function() {
 	}
 	
 
-	//$('#register').removeClass('disabled');
+	$('#register').removeClass('disabled');
 	//alert(last_pid);
 });

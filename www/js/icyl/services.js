@@ -18,21 +18,27 @@ angular.module('icyl.services', ['ngResource'])
 //AJAX数据操作函数
 .factory('Data', ['$resource', function($resource){
     return {
-      User: $resource('http://:baseurl/:path/lp.php', 
-                      {baseurl:'localhost', path:'PHPServ'}, 
-                      {
-                        signin: {method:'POST', params:{c:'user', a:'get_token'}},
-                        signup: {method:'POST', params:{c:'user', a:'register'}},
-                        update_detail: {method:'POST'},
-                        update_avatar: {method:'POST'},
-                        update_mobile: {method:'POST'},
-                        update_password: {method:'POST'}
+      User: $resource('http://:baseurl/:path/lp.php' 
+                      ,{baseurl:'localhost'
+                      , path:'PHPServ'
+                      //, callback: 'JSON_CALLBACK' 
+                      } 
+                      ,{
+                          signin: {method:'POST', params:{c:'user', a:'get_token'}}
+                        , signup: {method:'POST', params:{c:'user', a:'register'}}
+                        //,signin: {method:'JSONP', params:{c:'user', a:'get_token'}}
+                        //,signup: {method:'JSONP', params:{c:'user', a:'register'}}
+                        , update_detail: {method:'POST'}
+                        , update_avatar: {method:'POST'}
+                        , update_mobile: {method:'POST'}
+                        , update_password: {method:'POST'}
                       }),
-      Post: $resource('http://:baseurl/:path/lp.php', 
-                      {baseurl:'localhost', path:'good'}, 
-                      {
-                        signin: {method:'POST', params:{c:'user', a:'get_token'}},
-                        singup: {method:'POST', params:{c:'user', a:'register'}},
+      Post: $resource('http://:baseurl/:path/lp.php'
+                      ,{baseurl:'localhost'
+                      , path:'good'}
+                      ,{
+                          signin: {method:'POST', params:{c:'user', a:'get_token'}}
+                        , singup: {method:'POST', params:{c:'user', a:'register'}}
                       })
     };
 }])

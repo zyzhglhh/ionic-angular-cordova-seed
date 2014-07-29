@@ -50,13 +50,13 @@ angular.module('icyl.controllers', [])
 
 
   $scope.registerData = {
-    username: 'alexgzhou',
-    password: '123456789',
-    repeatpassword: '123456789',
-    name: '周天舒',
+    //username: 'alexgzhou',
+    //password: '123456789',
+    //repeatpassword: '123456789',
+    //name: '周天舒',
     gender: false,
     //genderFlag: false,
-    mobile: '13282037883'
+    //mobile: '13282037883'
   };
 
   //Alert(registerData.gender);
@@ -92,14 +92,20 @@ angular.module('icyl.controllers', [])
     Data.User.signup($scope.registerData, function(data) {
       //Alert($scope.registerData.genderFlag);
       $scope.registermodal.remove();
-      //$scope.registerData = {};
+      $scope.registerData = {};
+      $scope.registerData.gender = false;
       $ionicModal.fromTemplateUrl('templates/main/register.html', {
        scope: $scope
       }).then(function(modal) {
        $scope.registermodal = modal;
       });
+      Alert(data.data.user + ' 注册成功，用户名：' + data.data.username );
       $scope.login();
+    }, function(err){
+        console.log(' request fail !!!! ' + err);
     });
+
+
 
     // Simulate a login delay. Remove this and replace with your login
     // code if using a login system

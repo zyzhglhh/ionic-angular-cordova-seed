@@ -93,7 +93,7 @@ function login() {
 	    data:{
 			username: $('#username').val(),
 			pwd: md5Pwd,
-			celluuid: device.uuid //'A35AFD5C8-E9EB-4FFE-9E0B-410ABDD32FA4' //device.uuid 
+			celluuid: 'A35AFD5C8-E9EB-4FFE-9E0B-410ABDD32FA4' //device.uuid 
 			/*==============================Important!!!==================================
 			device.uuid加上后会导致不能自动登录，原因待查？
 			调用device.uuid时，phonegap的本地API还没初始化完毕的问题。可以等phonegap的所有本地api都已准备好后再调用。
@@ -247,7 +247,7 @@ function register() {
 			name: $('#name').val(),
 			mobi: $('#mobi').val(),
 			email: $('#email').val(),
-			celluuid: device.uuid //'A35AFD5C8-E9EB-4FFE-9E0B-410ABDD32FA4' //device.uuid 
+			celluuid: 'A35AFD5C8-E9EB-4FFE-9E0B-410ABDD32FA4' //device.uuid 
 			/*==============================Important!!!==================================
 			device.uuid加上后会导致不能自动登录，原因待查？
 			调用device.uuid时，phonegap的本地API还没初始化完毕的问题。可以等phonegap的所有本地api都已准备好后再调用。

@@ -155,27 +155,38 @@ class userController extends appController
 
 	public function register()
 	{
-		$username = z(t(v('username')));
-		$password = z(t(v('pwd')));
-		$confirmpassword = z(t(v('confirmpwd')));
-		$name = z(t(v('name')));
-    	$mobi = z(t(v('mobi')));
-    	//$email = z(t(v('email')));
-    	//$celluuid = z(t(v('celluuid')));
+		$request_body = file_get_contents('php://input');
+		$data = json_decode($request_body);
+		// $username = z(t(v(('username')));
+		// $password = z(t(v('password')));
+		// $confirmpassword = z(t(v('repeatpassword')));
+		// $name = z(t(v('name')));
+		// $gender = z(t(v('gender')));
+		// $mobi = z(t(v('mobile')));
+		//$email = z(t(v('email')));
+		//$celluuid = z(t(v('celluuid')));
+		$username = $data->{'username'};
+		$password = $data->{'password'};
+		$confirmpassword = $data->{'repeatpassword'};
+		$name = $data->{'name'};
+		$gender = $data->{'gender'};
+		$mobi = $data->{'mobile'};
 
-    	$actnum="";
+    	//$actnum="";
 
-		
+    	//$data = var_dump($data);
+
+		//return $this->send_result( array( 'user' => $data->{'username'} ) );
 
 		//调用函数，检测用户输入的数据
 		$UserNameGood=$this->Check_username($username);
 		$PasswordGood=$this->Check_Password($password);
-		$EmailGood=$this->Check_Email($email);
+		//$EmailGood=$this->Check_Email($email);
 		$ConfirmPasswordGood=$this->Check_ConfirmPassword($password,$confirmpassword);
 		//$error=false;//定义变量判断注册数据是否出现错误
 		if($UserNameGood !="用户名检测正确") {
 			//$error=true;//改变 error 的值表示出现了错误
-			return $this->send_error( OP_API_TOKEN_ERROR , $UserNameGood );
+			return $this->send_error( 9999 , $UserNameGood );
 			//echo $UserNameGood;//输出错误信息
 			//echo "<br>";
 		}
@@ -204,7 +215,7 @@ class userController extends appController
 		//
 		
 		//$row = unique_verifying( $username, $mobi, $email, $celluuid );
-		$row = unique_verifying( $username, $celluuid );
+		$row = unique_verifying( $username, $mobi );
 
 		if ($row) {
 			$arrlength=count($row); //必须对$row进行判断，因为如果$row无返回，则为false，而count(false) == 1；
@@ -228,21 +239,21 @@ class userController extends appController
 					//echo "用户邮箱已经注册<br>";
 					return $this->send_error( OP_API_TOKEN_ERROR , "用户邮箱已经注册" );
 				}*/
-				if ($row[$i]["celluuid"]==$celluuid) {
+				if ($row[$i]["mobile"]==$mobi) {
 					//$error=true;
 					//echo "用户邮箱已经注册<br>";
-					return $this->send_error( OP_API_TOKEN_ERROR , "该手机设备已经注册" );
+					return $this->send_error( OP_API_TOKEN_ERROR , "该手机号码已经注册" );
 				}
 			}
 		}
 
 		//如果数据检测都合法，则将用户资料写进数据库表
-		$actnum=$this->Check_actnum();//调用激活码函数
-		$Datetime=date("y-m-d H:i:s");//获取注册时间，也就是数据写入到用户表的时间
-		$result = insert_user_info ( $username, md5($password), $name, $mobi, $email, $Datetime, $celluuid );
+		//$actnum=$this->Check_actnum();//调用激活码函数
+		//$Datetime=date("y-m-d H:i:s");//获取注册时间，也就是数据写入到用户表的时间
+		$result = insert_user_info ( $username, md5($password), $name, $mobi, $gender );
 
 		if($result){
-			return $this->send_result( array( 'user' => $user['name'] , 'username' => $user['UserName'] ) );
+			return $this->send_result( array( 'user' => $name , 'username' => $username ) );
 		}
 		else {
 			return $this->send_error( OP_API_TOKEN_ERROR , db_error().", 注册失败！" );
@@ -301,268 +312,7 @@ class userController extends appController
 		}
 	}
         
-        public function avatar_upload()
-	{
-		if( $_FILES['file']['error'] != 0 ) 
-			return $this->send_error( OP_API_UPLOAD_ERROR , 'UPLOAD ERROR ' . $_FILES['file']['error'] ); 
-                        
-                        
-                 $tmp_image_name =  SAE_TMP_PATH . md5(time().rand(1,99999)) . '.tmp.jpg';
-                 jpeg_up( $_FILES['file']['tmp_name'], $tmp_image_name)   ;    
-		
-		include_once( CROOT . 'function/thumbnail.class.php' );
-		
-		$s = new SaeStorage();
-		
-		
-		$file_thumb_name = md5(time().rand(1,99999)) . '.snap.jpg';
-                
-                $tmp_file = SAE_TMP_PATH.$file_thumb_name;
-		
-                
-          	include_once( CROOT . 'function/icon.class.php' );
-                
-                $icon = new Icon();
-                
-                $icon->path = $tmp_image_name;
-                $icon->size = 80;
-                $icon->dest = $tmp_file;
-                $icon->createIcon();
-                
-          	/*
-                
-		$myThumb = new Thumbnail; // Start using a class
-		$myThumb->setMaxSize( 80 , 80 ); // Specify maximum size (width, height)
-		$myThumb->setImgSource(	$tmp_image_name ); // Specify original image filename
-		
-		$myThumb->Create( $tmp_file );
-		 
-		*/
-                
-                
-                
-                
-                if(!$thumb_url = $s->write( 'upload' , $file_thumb_name , file_get_contents($tmp_file) ))
-		{
-			return $this->send_error( OP_API_STORAGE_ERROR , 'SAVE ERROR ' . $s->errmsg() );
-		}
-		
-		
-		$sql = "UPDATE `user` SET `picture` = '" . s( $thumb_url ) . "' WHERE `id` = '" . intval(ss( 'uid' )) . "' LIMIT 1";
-				 
-				 
-		 run_sql( $sql );
-				 
-		 if( mysql_errno() != 0 )
-		 {
-		 	return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-		 }
-		 else
-		 {
-		 	$sql = "SELECT `id` as `uid` , `name` , `timeline` , `level`, `cover` , `picture` FROM `user` WHERE `id` = '" . intval( $_SESSION['uid'] ) . "' LIMIT 1";
-		
-			if( $user = get_line( $sql ) )
-			{
-				$user['refresh_time'] = date("m月d日 H:i");
-				$this->send_result( $user );	
-		 	}
-		 	else
-		 		return $this->send_error( OP_API_DB_ERROR , 'NO SUCH UID ' );
-		 
-                 }		 
-		
-		
-	}
-	
-	
-	public function image_upload()
-	{
-		if( $_FILES['file']['error'] != 0 ) 
-			return $this->send_error( OP_API_UPLOAD_ERROR , 'UPLOAD ERROR ' . $_FILES['file']['error'] ); 
-                        
-                        
-                 $tmp_image_name =  SAE_TMP_PATH . md5(time().rand(1,99999)) . '.tmp.jpg';
-                 jpeg_up( $_FILES['file']['tmp_name'], $tmp_image_name)   ;    
-		
-		include_once( CROOT . 'function/thumbnail.class.php' );
-		
-		$s = new SaeStorage();
-		
-		$file_name = md5(time().rand(1,99999)) . '.jpg';
-		
-		if( !$url = $s->write( 'upload' , $file_name , file_get_contents( $tmp_image_name ) ))
-		{
-			return $this->send_error( OP_API_STORAGE_ERROR , 'SAVE ERROR ' . $s->errmsg() );
-		}
-		
-		
-		$file_thumb_name = md5(time().rand(1,99999)) . '.snap.jpg';
-		
-		$myThumb = new Thumbnail; // Start using a class
-		$myThumb->setMaxSize( 430 , 600 ); // Specify maximum size (width, height)
-		$myThumb->setImgSource(	$tmp_image_name ); // Specify original image filename
-		
-		$tmp_file = SAE_TMP_PATH.$file_thumb_name;
-		$myThumb->Create( $tmp_file );
-		 
-		if(!$thumb_url = $s->write( 'upload' , $file_thumb_name , file_get_contents($tmp_file) ))
-		{
-			return $this->send_error( OP_API_STORAGE_ERROR , 'SAVE ERROR ' . $s->errmsg() );
-		}
-		
-		
-		$sql = "INSERT INTO `path` ( `uid` , `name` , `type` ,  `timeline` , `image` , `image_thumb`  ) VALUES " 
-				 . " ( '" . intval( ss('uid') ) . "' , '" . s( ss('name') ) . "' , 'MBLOG' , NOW() , '" . s( $url ) . "' , '" . s( $thumb_url ) . "' )";
-				 
-				 
-		 run_sql( $sql );
-				 
-		 if( mysql_errno() != 0 )
-		 {
-		 	return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-		 }
-		 else
-		 {
-		 	// todo
-		 	// this will cause some problem when using mysql relocation
-		 	
-		 	$pid = last_id();
-		 	if( intval( $pid ) < 1 ) return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-		 	
-		 	
-		 	if($path = get_line( "SELECT * FROM `path` WHERE `id` = '" . intval( $pid ) . "' LIMIT 1" ))
-		 		return $this->send_result( $path );
-		 	else
-		 		return $this->send_error( OP_API_DB_ERROR , 'NO SUCH PID ' );	
-		 }
-		 
-				 
-		
-		
-	}
-	
-	public function path_add()
-	{
-		// check the type first
-		$type = t(z(v('type')));
-		
-		switch( $type )
-		{
-			case 'MUSIC':
-				return $this->send_error( OP_API_NOT_IMPLEMENT_YET , 'coming soon' );
-				break;
-				
-			case 'SLEEP':
-				return $this->send_error( OP_API_NOT_IMPLEMENT_YET , 'coming soon' );
-				break;
-				
-			case 'MBLOG':
-			default:
-					
-				// pic - text - with - local can't be empty at the same time
-				$text = z(t(v('text')));
-				
-				$picture = z(t(v('picture')));
-				$with_uids = z(t(v('with_uids')));
-				$location = z(t(v('location')));
-				
-				if( (strlen( $text ) < 1) && (strlen( $picture ) < 1) && (strlen( $with_uids ) < 1) && (strlen( $location ) < 1)  )
-				{
-					return $this->send_error( OP_API_ARGS_ERROR , 'text/pic/with/local can\'t be empty at same time' );
-				}
-				
-				// TODO 
-				// generate text when is empty
-				
-				if( strlen($text) < 1  )
-				{
-					return $this->send_error( OP_API_ARGS_ERROR , 'text can\'t be empty' );
-				}
-				
-				$sql = "INSERT INTO `path` ( `uid` , `name` , `type` , `text` , `timeline` , `image` , `image_thumb` , `with_uids` 
-				 , `music_info` , `sleep_info` , location_info ) VALUES " 
-				 . " ( '" . intval( ss('uid') ) . "' , '" . s( ss('name') ) . "' , 'MBLOG' , '" . s( $text ) . "' , NOW() ";
-				 
-				 $image = z(t(v('image')));
-				 if( strlen($image) > 1 )
-				 {
-				 	// todo 
-				 	// make thumb for image
-				 	$image_thumb = $image;
-				 }
-				 else
-				 {
-				 	$image_thumb = '';
-				 }
-				 
-				 $sql .= " , '" . s( $image ) . "' , '" . s( $image_thumb ) . "' ";
-				 
-				 $with_uids = z(t(v('with_uids')));
-				 $sql .= " , '" . s( $with_uids ) . "' , '' , '' "; // music info , sleep info
-				 
-				 $location = z(t(v('location')));
-				 $sql .= " , '" . s( $location ) . "' ";
-				 
-				 
-				 
-				 $sql .= " )";
-				 
-				 //echo $sql;
-				 
-				 run_sql( $sql );
-				 
-				 if( mysql_errno() != 0 )
-				 {
-				 	return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-				 }
-				 else
-				 {
-				 	// todo
-				 	// this will cause some problem when using mysql relocation
-				 	
-				 	$pid = last_id();
-				 	if( intval( $pid ) < 1 ) return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-				 	
-				 	
-				 	if($path = get_line( "SELECT * FROM `path` WHERE `id` = '" . intval( $pid ) . "' LIMIT 1" ))
-				 		return $this->send_result( $path );
-				 	else
-				 		return $this->send_error( OP_API_DB_ERROR , 'NO SUCH PID ' );	
-				 }
-				 
-				 
-				
-		}
-		
-				
-	}
-	
-	
-	public function path_remove()
-	{
-		$pid = intval( v('pid') );
-		
-		if(!$path = get_line( "SELECT * FROM `path` WHERE `id` = '" . intval( $pid ) . "' LIMIT 1" ))
-		{
-			return $this->send_error( OP_API_DB_ERROR , 'NO SUCH PID ' );
-		}
-		
-		// you can only remove the path you add , or you are admin
-		if( $path['uid'] == ss('uid') || is_admin() )
-		{
-			$sql = "DELETE FROM `path` WHERE `id` = '" . intval( $pid ) . "' LIMIT 1";
-			run_sql( $sql );
-			
-			if( mysql_errno() != 0 )
-			{
-				return $this->send_error( OP_API_DB_ERROR , 'DATABASE ERROR ' . mysql_error() );
-			}
-			else return $this->send_result( array( 'msg' => 'OK' ) );
-			
-			
-		}
-		else return $this->send_error( OP_API_LEVEL_ERROR , 'U CAN DELETE YOUR PATH ONLY' );
-	}
+
 	
 	
 	
@@ -669,6 +419,8 @@ class userController extends appController
 		$obj['err_code'] = intval( $number );
 		$obj['err_msg'] = $msg;
 		
+		//header('Content-type:application/x-javascript');
+		//$callback = $_REQUEST['callback'];
 		//die( z(t(v('callback'))).'('.json_encode( $obj ).')' );
 		die( json_encode( $obj ) );
 	}
@@ -680,6 +432,7 @@ class userController extends appController
 		$obj['err_msg'] = 'success';
 		$obj['data'] = $data;
 
+		//header('Content-type:application/x-javascript');
 		//$callback = $_REQUEST['callback'];
 		//die( z(t(v('callback'))).'('.json_encode( $obj ).')' );
 		die( json_encode( $obj ) );
