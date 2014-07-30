@@ -308,6 +308,4 @@ angular.module('icyl.services', ['ngResource'])
   };
 }])
 
-
-
 ;
