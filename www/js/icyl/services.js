@@ -30,13 +30,14 @@ angular.module('icyl.services', ['ngResource'])
     User: $resource('http://:baseurl/:path/lp.php', 
                     {
                       baseurl:'localhost', 
-                      path:'PHPServ', 
-                      callback: 'JSON_CALLBACK'}, 
+                      path:'PHPServ'//, 
+                      //callback: 'JSON_CALLBACK'
+                    }, 
                     {
-                        //signin: {method:'POST', params:{c:'user', a:'get_token'}}
-                      //, signup: {method:'POST', params:{c:'user', a:'register'}}
-                      signin: {method:'JSONP', params:{c:'user', a:'get_token'}},
-                      signup: {method:'JSONP', params:{c:'user', a:'register'}},
+                      signin: {method:'POST', params:{c:'user', a:'get_token'}},
+                      signup: {method:'POST', params:{c:'user', a:'register'}},
+                      //signin: {method:'JSONP', params:{c:'user', a:'get_token'}},
+                      //signup: {method:'JSONP', params:{c:'user', a:'register'}},
                       checktoken: {method:'JSONP', params:{c:'user', a:'user_verify'}},
                       update_detail: {method:'POST'},
                       update_avatar: {method:'POST'},
@@ -222,12 +223,28 @@ angular.module('icyl.services', ['ngResource'])
 .factory('Identification', ['Storage', 'Data', 'Actions', function(Storage, Data, Actions) {
   return {
     checkToken: function($scope) {
+      console.log(Storage.kget('token')+"#2");
+
+      if (Storage.kget('username') && Storage.kget('password')) {
+        if (Storage.kget('token')) {
+          Data.User.checktoken({token: Storage.kget('token')}, function(data) {
+            if (data.err_code == 0) { 
+              Actions.mineClick.allowed($scope);
+            }
+            else {
+              
+            }
+      }
+
+
+
+
       if (Storage.kget('token')) {
         Data.User.checktoken({token: Storage.kget('token')}, function(data) {
           if (data.err_code == 0) { 
             Actions.mineClick.allowed($scope);
           }
-          else if(Storage.kget('username') && Storage.kget('password')) {
+          else if (Storage.kget('username') && Storage.kget('password')) {
             Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
               if (data.err_code == 0) { 
                 Storage.kset('token', data.data.token);
@@ -246,6 +263,9 @@ angular.module('icyl.services', ['ngResource'])
         }, function(err) {
           console.log(' request fail for login !!!!! ' + err);
         });
+      }
+      else if(Storage.kget('username') && Storage.kget('password')) {
+
       }
     }
 

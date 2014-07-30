@@ -9,7 +9,7 @@ angular.module('icyl.controllers', [])
 .controller('mainDefault', ['$scope', 'Identification', function($scope, Identification) {
   
 
-
+  //console.log({a:'111', b:'222'});
   Identification.checkToken($scope);
 
   //User.userLogin($scope);
