@@ -44,7 +44,7 @@ angular.module('icyl', dependencies)
       url:'/main',
       abstract: true,
       templateUrl: 'templates/main.html',
-      controller: 'mainDefault'
+      controller: 'mainContainer'
     })
 
     // .state('main.default', {
@@ -65,11 +65,23 @@ angular.module('icyl', dependencies)
     .state('main.default', {
       url:'/default',
       views: {
-        'main-default': {
-          templateUrl: 'templates/main/default.html'
+        'main-container': {
+          templateUrl: 'templates/main/default.html',
+          controller: 'mainDefault'
         }
       }
     })
+
+    .state('main.mine', {
+      url:'/mine',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/mine.html',
+          controller: 'mainMine'
+        }
+      }
+    })
+
 
     // .state('main.register', {
     //   url:'/register',

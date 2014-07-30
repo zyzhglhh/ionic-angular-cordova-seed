@@ -23,7 +23,7 @@ function kremove(key) {
 
 
 function check_token() {
-	$.post('http://' + kget('op_domain') + '/index.php?m=api&a=user_verify', {
+	$.post('http://' + kget('op_domain') + '/index.php?c=user&a=user_verify', {
 		'token': kget('op_token')
 	}, function(data) {
 		var data_obj = jQuery.parseJSON(data);

@@ -23,10 +23,10 @@ class userController extends appController
 		// 载入默认的
 		parent::__construct();
 		
-		/*if( g('a') != 'get_token' )	//搞清楚check_token()的机制？？？？？
+		if( g('a') != 'get_token' && g('a') != 'register' )	//搞清楚check_token()的机制？？？？？
 		{
 			$this->check_token();
-		}*/
+		}
 	}
 	
 	
@@ -38,9 +38,8 @@ class userController extends appController
 	
 	public function get_token()
 	{
-		$username = z(t(v('username')));
-		$password = z(t(v('pwd')));
-		$celluuid = z(t(v('celluuid')));
+		$username = z(t($_GET['username']));
+		$password = z(t($_GET['password']));
 		//$callback = z(t(v('callback')));
 		//$remember = v('remember');
 		
@@ -52,7 +51,7 @@ class userController extends appController
 		
 		if( $user )
 		{
-			$this->verifying( $user, $username, $password, $celluuid );
+			$this->verifying( $user, $username, $password );
 			
 			//$_SESSION['level'] = $user['level'];
 			
@@ -64,30 +63,34 @@ class userController extends appController
 		
 	}
 
-	public function verifying( $user, $username, $password, $celluuid )
+	public function verifying( $user, $username, $password )
 	{
 		//查询用户是否已经激活
-		if ($user["actNum"]=="0") {
+		//if ($user["actNum"]=="0") {
+		if (true) {
 			//判断登录失败次数是否小于等于 5 次
-			if ($user["NumLoginFail"]<=5) {
+			//if ($user["NumLoginFail"]<=5) {
+			if (true) {
 				//判断密码是否正确
-				if ($user["Password"]==$password) {
+				//return $this->send_result( array( 'username' => $user['UserName'], 'password' => $user['Password'], 'passed' => $password, 'passedsha1' => sha1($password) ) );
+				if ($user["Password"]==sha1($password)) {
 					//判断是否是别人的手机
-					if ($celluuid != $user['celluuid']) 
-					{
-						return $this->send_error( OP_API_TOKEN_ERROR , '请用你自己的手机登录！' );
-					}
+					// if ($celluuid != $user['celluuid']) 
+					// {
+					// 	return $this->send_error( OP_API_TOKEN_ERROR , '请用你自己的手机登录！' );
+					// }
 					//如果密码正确，修改最近登录时间，将登录失败信息清除
-					$datetime=date("y-m-d H:i:s");
-					$loginupdate = update_login( 'LastLogin', $datetime, $username );
-					$loginupdate = update_login( 'NumLoginFail', '0', $username );
+					//$datetime=date("y-m-d H:i:s");
+					//$loginupdate = update_login( 'LastLogin', $datetime, $username );
+					//$loginupdate = update_login( 'NumLoginFail', '0', $username );
 
 					/*return $this->send_error( OP_API_TOKEN_ERROR , 
 											update_login( 'LastLogin', $datetime, $username )
 											.'\r\n'.
 											update_login( "NumLoginFail", '0', $username ) );*/
 
-					if ($loginupdate) {
+					//if ($loginupdate) {
+					if (true) {
 						//创建会话，保存登录信息
 						session_start();
 						$token = session_id();
@@ -96,7 +99,7 @@ class userController extends appController
 						$_SESSION['username'] = $user['UserName'];
 						$_SESSION['password'] = $user['Password'];
 						//发送 cookie 到客户端，密码被加密
-						return $this->send_result( array( 'token' => $token , 'username' => $user['UserName'], 'password' => $user['Password'] ) );
+						return $this->send_result( array( 'token' => $token , 'user' => $user['Name'], 'username' => $user['UserName'], 'password' => $user['Password'] ) );
 					}
 					else {
 						return $this->send_error( OP_API_TOKEN_ERROR , db_error().', 数据库更新错误' );
@@ -105,47 +108,48 @@ class userController extends appController
 				else {
 					//密码错误，登录失败
 					//检查上次登录失败时间是否在 10min 之内，如果是，则登录失败次数增加 1
-					$datetime=date("y-m-d H:i:s",strtotime("-10 minutes"));//获取 10 分钟以前的时间
-					$timenow=date("y-m-d H:i:s");//获取现在的时间
-					if($user["LastLoginFail"]>$datetime) {//在 10min 之内
+					//$datetime=date("y-m-d H:i:s",strtotime("-10 minutes"));//获取 10 分钟以前的时间
+					//$timenow=date("y-m-d H:i:s");//获取现在的时间
+					//if($user["LastLoginFail"]>$datetime) {//在 10min 之内
 						//登录失败次数加 1
-						$loginupdate = update_login( 'NumLoginFail', ($user["NumLoginFail"]+1), $username );
-						/*return $this->send_error( OP_API_TOKEN_ERROR , 
-											update_login( 'NumLoginFail', ($user["NumLoginFail"]+1), $username ) . '-----' . 
-											update_login( 'LastLogin', $datetime, $username ) );*/
+						//$loginupdate = update_login( 'NumLoginFail', ($user["NumLoginFail"]+1), $username );
+						///*return $this->send_error( OP_API_TOKEN_ERROR , 
+						//					update_login( 'NumLoginFail', ($user["NumLoginFail"]+1), $username ) . '-----' . 
+						//					update_login( 'LastLogin', $datetime, $username ) );*/
 						//$query="update $dbloginTable set NumLoginFail=NumLoginFail+1 where UserName='$username'";
 						//$result=mysql_query($query);
 						//修改登录失败时间
-						$loginupdate = update_login( 'LastLoginFail', $timenow, $username );
+						//$loginupdate = update_login( 'LastLoginFail', $timenow, $username );
 						//$query="update $dbloginTable set LastLoginFail='$timenow' where UserName='$username'";
 						//$result=mysql_query($query);
 						//返回到登录页面
 						//header("refresh:5;url=http://localhost/members/login.php");
-						return $this->send_error( OP_API_TOKEN_ERROR , '密码错误'.($user["NumLoginFail"]+1).'次（允许6次）' );
-					}
-					else {//不在 10min 之内，只修改登录失败时间
-						$loginupdate = update_login( 'LastLoginFail', $timenow, $username );
+						//return $this->send_error( OP_API_TOKEN_ERROR , '密码错误'.($user["NumLoginFail"]+1).'次（允许6次）' );
+					//}
+					//else {//不在 10min 之内，只修改登录失败时间
+						//$loginupdate = update_login( 'LastLoginFail', $timenow, $username );
 						//返回到登录页面
 						//header("refresh:5;url=http://localhost/members/login.php");
+						//return $this->send_result( array( 'token' => $token , 'username' => $user['UserName'], 'password' => $user['Password'] ) );
 						return $this->send_error( OP_API_TOKEN_ERROR , '密码错误，请重新输入');
-					}
+					//}
 				}
 			}
-			else {
+			//else {
 				//失败次数超过 5 次
 				//检查时间， 如果上次登录失败在半个小时前， 则解锁， 给用户一次重新登录机会。 只有一次机会
-				$datetime=date("y-m-d H:i:s",strtotime("-30 minutes"));
-				if($user["LastLoginFail"]<$datetime) {//半个小时以前
-					$loginupdate = update_login( 'NumLoginFail', '5', $username );
-				}
-				else {
+				//$datetime=date("y-m-d H:i:s",strtotime("-30 minutes"));
+				//if($user["LastLoginFail"]<$datetime) {//半个小时以前
+				//	$loginupdate = update_login( 'NumLoginFail', '5', $username );
+				//}
+				//else {
 					//半个小时内，则锁定帐户，返回到登录页面，半个小时后解锁
-					$timenow=date("y-m-d H:i:s");
-					$loginupdate = update_login( 'LastLoginFail', $timenow, $username );
+				//	$timenow=date("y-m-d H:i:s");
+				//	$loginupdate = update_login( 'LastLoginFail', $timenow, $username );
 					//header("refresh:5;url=http://localhost/members/login.php");
-					return $this->send_error( OP_API_TOKEN_ERROR , '您的账号目前被锁定，半个小时后自动解锁。请解锁后登录' );
-				}
-			}
+				//	return $this->send_error( OP_API_TOKEN_ERROR , '您的账号目前被锁定，半个小时后自动解锁。请解锁后登录' );
+			//	}
+			//}
 		}
 		else {//激活码不为 0.用户需要激活
 			//header("refresh:5;url=http://localhost/members/activate.php");
@@ -250,7 +254,7 @@ class userController extends appController
 		//如果数据检测都合法，则将用户资料写进数据库表
 		//$actnum=$this->Check_actnum();//调用激活码函数
 		//$Datetime=date("y-m-d H:i:s");//获取注册时间，也就是数据写入到用户表的时间
-		$result = insert_user_info ( $username, md5($password), $name, $mobi, $gender );
+		$result = insert_user_info ( $username, sha1($password), $name, $mobi, $gender );
 
 		if($result){
 			return $this->send_result( array( 'user' => $name , 'username' => $username ) );
@@ -275,11 +279,13 @@ class userController extends appController
 	
 	public function user_verify()
 	{
-		$sql = "SELECT `id` as `uid` , `name` , `timeline` , `level`, `cover` , `picture` FROM `user` WHERE `id` = '" . intval( $_SESSION['uid'] ) . "' LIMIT 1";
+		//$sql = "SELECT `id` as `uid` , `name` , `timeline` , `level`, `cover` , `picture` FROM `user` WHERE `id` = '" . intval( $_SESSION['uid'] ) . "' LIMIT 1";
 		
-		if( $user = get_line( $sql ) )
+		$user = get_user_info_by_id( $_SESSION['username'] );
+
+		if( $user )
 		{
-			$user['refresh_time'] = date("m月d日 H:i");
+			//$user['refresh_time'] = date("m月d日 H:i");
 			
 			$this->send_result( $user );
 		}
