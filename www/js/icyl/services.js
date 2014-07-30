@@ -65,11 +65,13 @@ angular.module('icyl.services', ['ngResource'])
 
 //用户操作函数
 .factory('User', 
-  ['$ionicModal', '$ionicAnimation', 'Storage', 'Data', 'Alert', 
-  function($ionicModal, $ionicAnimation, Storage, Data, Alert) {
+  ['$ionicModal', '$ionicAnimation', 'Storage', 'Data', 'Alert', '$state',
+  function($ionicModal, $ionicAnimation, Storage, Data, Alert, $state) {
     return {
       userLogin: function($scope) {
         $scope.loginData = {
+          username: 'alexgzhou',
+          password: '123456789',
           rememberPwd: false
         };
 
@@ -102,7 +104,7 @@ angular.module('icyl.services', ['ngResource'])
           Data.User.signin($scope.loginData, function(data) {
 
           if (data.err_code == 0) { 
-              Alert(data.data.user + '，欢迎回来！' ); 
+              //Alert(data.data.user + '，欢迎回来！' ); 
               $scope.loginmodal.remove();
               $ionicModal.fromTemplateUrl('templates/main/login.html', {
                scope: $scope
@@ -118,6 +120,8 @@ angular.module('icyl.services', ['ngResource'])
               $scope.minehref = '#/main/mine';
               //Alert(data.data.token+'=='+data.data.username+'=='+data.data.password+'=='+$scope.loginData.rememberPwd);
               $scope.loginData = {};
+              $state.go('main.mine');
+              console.log('#10 in User.userLogin.doLogin ' + ": " + $scope.mineNgclick); //test
             }
             else {
               Alert(data.err_code + '：' + data.err_msg);
@@ -213,6 +217,7 @@ angular.module('icyl.services', ['ngResource'])
       allowed: function($scope) {
         $scope.mineNgclick = '';
         $scope.minehref = '#/main/mine';
+        console.log('#9 in Actions.mineClick.allowed ' + ": " + $scope.mineNgclick); //test
       },
       denied: function($scope) {
         User.userLogin($scope);
@@ -220,6 +225,7 @@ angular.module('icyl.services', ['ngResource'])
         console.log('#7 in Actions.mineClick.denied ' + $scope.loginData.rememberPwd + ": " + $scope.mineNgclick); //test
         $scope.mineNgclick = 'login()';
         $scope.minehref = '#';
+        console.log('#8 in Actions.mineClick.denied ' + $scope.loginData.rememberPwd + ": " + $scope.mineNgclick); //test
       }
     }
 
@@ -242,6 +248,7 @@ angular.module('icyl.services', ['ngResource'])
           Data.User.checktoken({token: Storage.kget('token')}, function(data) {
             if (data.err_code == 0) { 
               Actions.mineClick.allowed($scope);
+              console.log('#10 in Identification.checkToken ' + ": " + $scope.mineNgclick); //test
             }
             else {
               Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
@@ -251,6 +258,7 @@ angular.module('icyl.services', ['ngResource'])
                 }
                 else {
                   Actions.mineClick.denied($scope);
+                  console.log('#11 in Identification.checkToken ' + ": " + $scope.mineNgclick); //test
                 }
               }, function(err) {
                 console.log(' request fail for get_token !!!!! ' + err);
