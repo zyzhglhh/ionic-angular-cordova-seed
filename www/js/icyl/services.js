@@ -12,6 +12,9 @@ angular.module('icyl.services', ['ngResource'])
     kremove: function(key) {
       $window.localStorage.removeItem(key);
     }
+
+
+
   };
 }])
 
@@ -30,14 +33,14 @@ angular.module('icyl.services', ['ngResource'])
     User: $resource('http://:baseurl/:path/lp.php', 
                     {
                       baseurl:'localhost', 
-                      path:'PHPServ'//, 
-                      //callback: 'JSON_CALLBACK'
+                      path:'PHPServ', 
+                      callback: 'JSON_CALLBACK' //jsonp_flag
                     }, 
                     {
-                      signin: {method:'POST', params:{c:'user', a:'get_token'}},
-                      signup: {method:'POST', params:{c:'user', a:'register'}},
-                      //signin: {method:'JSONP', params:{c:'user', a:'get_token'}},
-                      //signup: {method:'JSONP', params:{c:'user', a:'register'}},
+                      //signin: {method:'POST', params:{c:'user', a:'get_token'}},//json_flag
+                      //signup: {method:'POST', params:{c:'user', a:'register'}}, //json_flag
+                      signin: {method:'JSONP', params:{c:'user', a:'get_token'}}, //jsonp_flag
+                      signup: {method:'JSONP', params:{c:'user', a:'register'}},  //jsonp_flag
                       checktoken: {method:'JSONP', params:{c:'user', a:'user_verify'}},
                       update_detail: {method:'POST'},
                       update_avatar: {method:'POST'},
@@ -52,6 +55,9 @@ angular.module('icyl.services', ['ngResource'])
                       signin: {method:'POST', params:{c:'user', a:'get_token'}},
                       singup: {method:'POST', params:{c:'user', a:'register'}}
                     })
+
+
+
   };
 }])
 
@@ -108,6 +114,8 @@ angular.module('icyl.services', ['ngResource'])
               }
               Storage.kset('username', data.data.username);
               Storage.kset('token', data.data.token);
+              $scope.mineNgclick = '';
+              $scope.minehref = '#/main/mine';
               //Alert(data.data.token+'=='+data.data.username+'=='+data.data.password+'=='+$scope.loginData.rememberPwd);
               $scope.loginData = {};
             }
@@ -193,8 +201,9 @@ angular.module('icyl.services', ['ngResource'])
 
 
 
-    }
+    };
 }])
+
 
 
 //页面行为函数
@@ -208,6 +217,7 @@ angular.module('icyl.services', ['ngResource'])
       denied: function($scope) {
         User.userLogin($scope);
         User.userRegister($scope);
+        console.log('#7 in Actions.mineClick.denied ' + $scope.loginData.rememberPwd + ": " + $scope.mineNgclick); //test
         $scope.mineNgclick = 'login()';
         $scope.minehref = '#';
       }
@@ -219,11 +229,13 @@ angular.module('icyl.services', ['ngResource'])
 }])
 
 
+
 //安全认证函数
 .factory('Identification', ['Storage', 'Data', 'Actions', function(Storage, Data, Actions) {
   return {
     checkToken: function($scope) {
-      console.log(Storage.kget('token')+"#2");
+      
+      console.log('#4 in Identification.checkToken ' + Storage.kget('token') + ": " + $scope.mineNgclick); //test
 
       if (Storage.kget('username') && Storage.kget('password')) {
         if (Storage.kget('token')) {
@@ -232,21 +244,25 @@ angular.module('icyl.services', ['ngResource'])
               Actions.mineClick.allowed($scope);
             }
             else {
-              
+              Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
+                if (data.err_code == 0) { 
+                  Storage.kset('token', data.data.token);
+                  Actions.mineClick.allowed($scope);
+                }
+                else {
+                  Actions.mineClick.denied($scope);
+                }
+              }, function(err) {
+                console.log(' request fail for get_token !!!!! ' + err);
+              });
             }
-      }
-
-
-
-
-      if (Storage.kget('token')) {
-        Data.User.checktoken({token: Storage.kget('token')}, function(data) {
-          if (data.err_code == 0) { 
-            Actions.mineClick.allowed($scope);
-          }
-          else if (Storage.kget('username') && Storage.kget('password')) {
-            Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
-              if (data.err_code == 0) { 
+          }, function(err) {
+              console.log(' request fail for check_token !!!!! ' + err);
+          });
+        }
+        else {
+          Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
+            if (data.err_code == 0) { 
                 Storage.kset('token', data.data.token);
                 Actions.mineClick.allowed($scope);
               }
@@ -254,18 +270,28 @@ angular.module('icyl.services', ['ngResource'])
                 Actions.mineClick.denied($scope);
               }
             }, function(err) {
-              console.log(' request fail for login !!!!! ' + err);
+              console.log(' request fail for get_token !!!!! ' + err);
             });
-          }
-          else {
-            Actions.mineClick.denied($scope);
-          }
-        }, function(err) {
-          console.log(' request fail for login !!!!! ' + err);
-        });
+        }
       }
-      else if(Storage.kget('username') && Storage.kget('password')) {
-
+      else {
+        if (Storage.kget('token')) {
+          console.log('#5 in Identification.checkToken ' + Storage.kget('token') + ": " + $scope.mineNgclick); //test
+          Data.User.checktoken({token: Storage.kget('token')}, function(data) {
+            if (data.err_code == 0) { 
+              Actions.mineClick.allowed($scope);
+            }
+            else {
+              console.log('#6 in Identification.checkToken ' + data.err_msg + ": " + $scope.mineNgclick); //test
+              Actions.mineClick.denied($scope);
+            }
+          }, function(err) {
+              console.log(' request fail for check_token without username and password !!!!! ' + err);
+          });
+        }
+        else {
+          Actions.mineClick.denied($scope);
+        }
       }
     }
 
@@ -273,8 +299,6 @@ angular.module('icyl.services', ['ngResource'])
 
   };
 }])
-
-
 
 
 

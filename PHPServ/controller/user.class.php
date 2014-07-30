@@ -38,8 +38,12 @@ class userController extends appController
 	
 	public function get_token()
 	{
-		$username = z(t($_GET['username']));
-		$password = z(t($_GET['password']));
+		//$request_body = file_get_contents('php://input');	//json_flag
+		//$data = json_decode($request_body);				//json_flag
+		$username = z(t($_GET['username']));				//jsonp_flag
+		$password = z(t($_GET['password']));				//jsonp_flag
+		// $username = $data->{'username'};					//json_flag
+		// $password = $data->{'password'};					//json_flag
 		//$callback = z(t(v('callback')));
 		//$remember = v('remember');
 		
@@ -159,22 +163,22 @@ class userController extends appController
 
 	public function register()
 	{
-		$request_body = file_get_contents('php://input');
-		$data = json_decode($request_body);
-		// $username = z(t($_GET['username']));
-		// $password = z(t($_GET['password']));
-		// $confirmpassword = z(t($_GET['repeatpassword']));
-		// $name = z(t($_GET['name']));
-		// $gender = z(t($_GET['gender']));
-		// $mobi = z(t($_GET['mobile']));
+		//$request_body = file_get_contents('php://input');	//json_flag
+		//$data = json_decode($request_body);				//json_flag
+		$username = z(t($_GET['username']));				//jsonp_flag
+		$password = z(t($_GET['password']));				//jsonp_flag
+		$confirmpassword = z(t($_GET['repeatpassword']));	//jsonp_flag
+		$name = z(t($_GET['name']));						//jsonp_flag
+		$gender = z(t($_GET['gender']));					//jsonp_flag
+		$mobi = z(t($_GET['mobile']));						//jsonp_flag
 		// //$email = z(t(v('email')));
 		// //$celluuid = z(t(v('celluuid')));
-		$username = $data->{'username'};
-		$password = $data->{'password'};
-		$confirmpassword = $data->{'repeatpassword'};
-		$name = $data->{'name'};
-		$gender = $data->{'gender'};
-		$mobi = $data->{'mobile'};
+		// $username = $data->{'username'};					//json_flag
+		// $password = $data->{'password'};					//json_flag
+		// $confirmpassword = $data->{'repeatpassword'};	//json_flag
+		// $name = $data->{'name'};							//json_flag
+		// $gender = $data->{'gender'};						//json_flag
+		// $mobi = $data->{'mobile'};						//json_flag
 
     	//$actnum="";
 
@@ -425,10 +429,10 @@ class userController extends appController
 		$obj['err_code'] = intval( $number );
 		$obj['err_msg'] = $msg;
 		
-		//header('Content-type:application/x-javascript');
-		//$callback = $_GET['callback'];
-		//die( z(t(v('callback'))).'('.json_encode( $obj ).')' );
-		die( json_encode( $obj ) );
+		header('Content-type:application/x-javascript');		//jsonp_flag
+		$callback = $_GET['callback'];							//jsonp_flag
+		die( z(t(v('callback'))).'('.json_encode( $obj ).')' );	//jsonp_flag
+		//die( json_encode( $obj ) );							//json_flag
 	}
 	
 	public function send_result( $data )
@@ -438,10 +442,10 @@ class userController extends appController
 		$obj['err_msg'] = 'success';
 		$obj['data'] = $data;
 
-		//header('Content-type:application/x-javascript');
-		//$callback = $_GET['callback'];
-		//die( z(t(v('callback'))).'('.json_encode( $obj ).')' );
-		die( json_encode( $obj ) );
+		header('Content-type:application/x-javascript');		//jsonp_flag
+		$callback = $_GET['callback'];							//jsonp_flag
+		die( z(t(v('callback'))).'('.json_encode( $obj ).')' );	//jsonp_flag
+		//die( json_encode( $obj ) );							//json_flag
 	}
 	
 }
