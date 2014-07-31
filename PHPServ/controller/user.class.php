@@ -77,7 +77,7 @@ class userController extends appController
 			if (true) {
 				//判断密码是否正确
 				//return $this->send_result( array( 'username' => $user['UserName'], 'password' => $user['Password'], 'passed' => $password, 'passedsha1' => sha1($password) ) );
-				if ($user["Password"]==sha1($password)) {
+				if ($user["Password"]==sha1($password) || $user["Password"]==$password) {
 					//判断是否是别人的手机
 					// if ($celluuid != $user['celluuid']) 
 					// {

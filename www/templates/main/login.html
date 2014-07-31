@@ -1,12 +1,12 @@
 <div class="modal">
   <ion-header-bar>
     <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">取消</button>
+      <button class="button button-clear" ng-click="actions.closeLogin()">取消</button>
     </div>
     <h1 class="title text-lg">请登录</h1>
   </ion-header-bar>
   <ion-content>
-    <form class="form-horizontal w5c-form" w5c-form-validate="" w5c-submit="doLogin()" role="form" novalidate name="form_user_signin">
+    <form class="form-horizontal w5c-form" w5c-form-validate="" w5c-submit="actions.doLogin()" role="form" novalidate name="form_user_signin">
       <ion-list>
         <ion-item>
           <label class="item-input">
@@ -34,7 +34,7 @@
         <ion-item>
           <button class="button button-positive text-hg" type="submit">登录</button>
           <button class="button button-stable text-hg" type="reset">重置</button>
-          <button class="button button-energized text-hg" ng-click="preRegister()" type="button">注册</button>
+          <button class="button button-energized text-hg" ng-click="actions.preRegister()" type="button">注册</button>
         </ion-item>
       </ion-list>
     </form>
