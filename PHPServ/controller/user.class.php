@@ -38,12 +38,12 @@ class userController extends appController
 	
 	public function get_token()
 	{
-		//$request_body = file_get_contents('php://input');	//json_flag
-		//$data = json_decode($request_body);				//json_flag
-		$username = z(t($_GET['username']));				//jsonp_flag
-		$password = z(t($_GET['password']));				//jsonp_flag
-		// $username = $data->{'username'};					//json_flag
-		// $password = $data->{'password'};					//json_flag
+		$request_body = file_get_contents('php://input');	//json_flag
+		$data = json_decode($request_body);					//json_flag
+		// $username = z(t($_GET['username']));				//jsonp_flag
+		// $password = z(t($_GET['password']));				//jsonp_flag
+		$username = $data->{'username'};					//json_flag
+		$password = $data->{'password'};					//json_flag
 		//$callback = z(t(v('callback')));
 		//$remember = v('remember');
 		
@@ -163,22 +163,22 @@ class userController extends appController
 
 	public function register()
 	{
-		//$request_body = file_get_contents('php://input');	//json_flag
-		//$data = json_decode($request_body);				//json_flag
-		$username = z(t($_GET['username']));				//jsonp_flag
-		$password = z(t($_GET['password']));				//jsonp_flag
-		$confirmpassword = z(t($_GET['repeatpassword']));	//jsonp_flag
-		$name = z(t($_GET['name']));						//jsonp_flag
-		$gender = z(t($_GET['gender']));					//jsonp_flag
-		$mobi = z(t($_GET['mobile']));						//jsonp_flag
+		$request_body = file_get_contents('php://input');	//json_flag
+		$data = json_decode($request_body);				//json_flag
+		// $username = z(t($_GET['username']));				//jsonp_flag
+		// $password = z(t($_GET['password']));				//jsonp_flag
+		// $confirmpassword = z(t($_GET['repeatpassword']));	//jsonp_flag
+		// $name = z(t($_GET['name']));						//jsonp_flag
+		// $gender = z(t($_GET['gender']));					//jsonp_flag
+		// $mobi = z(t($_GET['mobile']));						//jsonp_flag
 		// //$email = z(t(v('email')));
 		// //$celluuid = z(t(v('celluuid')));
-		// $username = $data->{'username'};					//json_flag
-		// $password = $data->{'password'};					//json_flag
-		// $confirmpassword = $data->{'repeatpassword'};	//json_flag
-		// $name = $data->{'name'};							//json_flag
-		// $gender = $data->{'gender'};						//json_flag
-		// $mobi = $data->{'mobile'};						//json_flag
+		$username = $data->{'username'};					//json_flag
+		$password = $data->{'password'};					//json_flag
+		$confirmpassword = $data->{'repeatpassword'};	//json_flag
+		$name = $data->{'name'};							//json_flag
+		$gender = $data->{'gender'};						//json_flag
+		$mobi = $data->{'mobile'};						//json_flag
 
     	//$actnum="";
 
@@ -328,13 +328,29 @@ class userController extends appController
 	
 	private function check_token()
 	{
-		$token = z(t(v('token')));
+		$request_body = file_get_contents('php://input');	//json_flag
+		$data = json_decode($request_body);					//json_flag
+		$token = $data->{'token'};
+		//$token = z(t($_GET['token']));					//jsonp_flag
+		//return $this->send_error( OP_API_TOKEN_ERROR , $token . "=====" . strlen($token) );	//test
 		if( strlen( $token ) < 2 ) return $this->send_error( OP_API_TOKEN_ERROR , 'no token' );
 		
 		session_id( $token );
 		session_start();
-		
-		if( $_SESSION['token'] != $token ) return $this->send_error( OP_API_TOKEN_ERROR , 'bad token' );
+		//return $this->send_error( OP_API_TOKEN_ERROR , $_SESSION['token']."---".session_id($token)."---".session_id() );
+		if( $_SESSION['token'] != $token ) {
+			$_SESSION = array();
+			if (ini_get("session.use_cookies")) {
+			    $params = session_get_cookie_params();
+			    setcookie(session_name(), '', time() - 42000,
+			        $params["path"], $params["domain"],
+			        $params["secure"], $params["httponly"]
+			    );
+			}
+			session_destroy();
+
+			return $this->send_error( OP_API_TOKEN_ERROR , 'bad token: '.$_SESSION['token'].session_id() );
+		}
 	}
 
 	//定义产生激活码函数
@@ -429,10 +445,10 @@ class userController extends appController
 		$obj['err_code'] = intval( $number );
 		$obj['err_msg'] = $msg;
 		
-		header('Content-type:application/x-javascript');		//jsonp_flag
-		$callback = $_GET['callback'];							//jsonp_flag
-		die( z(t(v('callback'))).'('.json_encode( $obj ).')' );	//jsonp_flag
-		//die( json_encode( $obj ) );							//json_flag
+		// $callback = $_GET['callback'];							//jsonp_flag
+		// die( z(t(v('callback'))).'('.json_encode( $obj ).')' );	//jsonp_flag
+		header('Content-type:application/x-javascript');		//json_flag
+		die( json_encode( $obj ) );							//json_flag
 	}
 	
 	public function send_result( $data )
@@ -442,10 +458,10 @@ class userController extends appController
 		$obj['err_msg'] = 'success';
 		$obj['data'] = $data;
 
-		header('Content-type:application/x-javascript');		//jsonp_flag
-		$callback = $_GET['callback'];							//jsonp_flag
-		die( z(t(v('callback'))).'('.json_encode( $obj ).')' );	//jsonp_flag
-		//die( json_encode( $obj ) );							//json_flag
+		// $callback = $_GET['callback'];							//jsonp_flag
+		// die( z(t(v('callback'))).'('.json_encode( $obj ).')' );	//jsonp_flag
+		header('Content-type:application/x-javascript');		//json_flag
+		die( json_encode( $obj ) );							//json_flag
 	}
 	
 }

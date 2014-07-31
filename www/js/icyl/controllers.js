@@ -7,11 +7,12 @@ angular.module('icyl.controllers', [])
 }])
 
 //默认主页控制器
-.controller('mainDefault', ['$scope', 'Identification', function($scope, Identification) {
+.controller('mainDefault', ['$scope', 'Identification', 'Params', function($scope, Identification, Params) {
   
 
   console.log('#2 in mainDefault');   //test
-  Identification.checkToken($scope);
+  Params.outObj = $scope;
+  Identification.checkToken(Params.outObj);
 
 
 }])
