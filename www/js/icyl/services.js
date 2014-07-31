@@ -237,7 +237,7 @@ angular.module('icyl.services', ['ngResource'])
         User.userRegister($scope);
         //$scope.mine.mineNgclick = "actions.login()";  //这句语句在$resource之后actions.login()失效,可能和异步AJAX有关，具体原因还需详细分析？
         $scope.mine.minehref = "#";
-        //console.log("#14----------"+$scope.$id);  //=====================test
+        //console.log("#14----------"+$scope.$id);  //=====================test 
       }
     }
 
