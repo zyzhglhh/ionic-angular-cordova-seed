@@ -227,19 +227,17 @@ angular.module('icyl.services', ['ngResource'])
   return {
     mineClick: {
       allowed: function($scope) {
-        $scope.mine = {};
         $scope.mine.mineNgclick = '';
         $scope.mine.minehref = "#/main/mine";
-        console.log("#15----------"+$scope.$id);  //=====================test
+        //console.log("#15----------"+$scope.$id);  //=====================test
       },
       denied: function($scope) {
         $scope.actions = {};
         User.userLogin($scope);
         User.userRegister($scope);
-        $scope.mine = {};
-        $scope.mine.mineNgclick = "actions.login()";
+        //$scope.mine.mineNgclick = "actions.login()";  //这句语句在$resource之后actions.login()失效,可能和异步AJAX有关，具体原因还需详细分析？
         $scope.mine.minehref = "#";
-        console.log("#14----------"+$scope.$id);  //=====================test
+        //console.log("#14----------"+$scope.$id);  //=====================test
       }
     }
 
@@ -254,38 +252,38 @@ angular.module('icyl.services', ['ngResource'])
 .factory('Identification', 
         ['Storage', 
          'Data', 
-         //'Actions', 
+         'Actions', 
          function(
           Storage
           , Data 
-          //, Actions
+          , Actions
          ) {
   return {
     checkToken: function($scope) {
       
-      //$scope.mine = {};
+      $scope.mine = {};
       //console.log("#4----------"+$scope.$id);  //=====================test
 
       if (Storage.kget('username') && Storage.kget('password')) {
         if (Storage.kget('token')) {
           Data.User.checktoken({token: Storage.kget('token')}, function(data) {
             if (data.err_code == 0) { 
-              //Actions.mineClick.allowed($scope);
+              Actions.mineClick.allowed($scope);
               //console.log("#5----------"+$scope.$id);  //=====================test
-              return true;
+              //return true;
             }
             else {
               Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
                 if (data.err_code == 0) { 
                   Storage.kset('token', data.data.token);
-                  //Actions.mineClick.allowed($scope);
+                  Actions.mineClick.allowed($scope);
                   //console.log("#6----------"+$scope.$id);  //=====================test
-                  return true;
+                  //return true;
                 }
                 else {
-                  //Actions.mineClick.denied($scope);
+                  Actions.mineClick.denied($scope);
                   //console.log("#7----------"+$scope.$id);  //=====================test
-                  return false;
+                  //return false;
                 }
               }, function(err) {
                 console.log(' request fail for get_token !!!!! ' + err);
@@ -299,14 +297,14 @@ angular.module('icyl.services', ['ngResource'])
           Data.User.signin({username: Storage.kget('username'), password: Storage.kget('password')}, function(data) {
             if (data.err_code == 0) { 
                 Storage.kset('token', data.data.token);
-                //Actions.mineClick.allowed($scope);
+                Actions.mineClick.allowed($scope);
                 //console.log("#8----------"+$scope.$id);  //=====================test
-                return true;
+                //return true;
               }
               else {
-                //Actions.mineClick.denied($scope);
+                Actions.mineClick.denied($scope);
                 //console.log("#9----------"+$scope.$id);  //=====================test
-                return false;
+                //return false;
               }
             }, function(err) {
               console.log(' request fail for get_token !!!!! ' + err);
@@ -315,26 +313,26 @@ angular.module('icyl.services', ['ngResource'])
       }
       else {
         if (Storage.kget('token')) {
-          console.log("#10----------"+$scope.$id);  //=====================test
+          //console.log("#10----------"+$scope.$id);  //=====================test
           Data.User.checktoken({token: Storage.kget('token')}, function(data) {
             if (data.err_code == 0) { 
-              //Actions.mineClick.allowed($scope);
-              console.log("#11----------"+$scope.$id);  //=====================test
-              return true;
+              Actions.mineClick.allowed($scope);
+              //console.log("#11----------"+$scope.$id);  //=====================test
+              // return true;
             }
             else {
-              console.log("#12----------"+$scope.$id);  //=====================test
-              //Actions.mineClick.denied($scope);
-              return false;
+              //console.log("#12----------"+$scope.$id);  //=====================test
+              Actions.mineClick.denied($scope);
+              // return false;
             }
           }, function(err) {
               console.log(' request fail for check_token without username and password !!!!! ' + err);
           });
         }
         else {
-          //Actions.mineClick.denied($scope);
+          Actions.mineClick.denied($scope);
           //console.log("#13----------"+$scope.$id);  //=====================test
-          return false;
+          // return false;
         }
       }
     }

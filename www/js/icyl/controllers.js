@@ -7,36 +7,25 @@ angular.module('icyl.controllers', [])
 }])
 
 //默认主页控制器
-.controller('mainDefault', ['$scope', 'Identification', 'Actions', function($scope, Identification, Actions) {
+.controller('mainDefault', ['$scope', 'Identification', 'Actions', 'User', function($scope, Identification, Actions, User) {
   
 
   //console.log("#2----------"+$scope.$id);  //=====================test
   //Params.outObj = $scope;
-  var checkin = Identification.checkToken($scope);
-  console.log("#2----------"+checkin+"====="+$scope.$id);  //=====================test
-  if (checkin) {
-  	Actions.mineClick.allowed($scope);
-  }
-  else {
-  	Actions.mineClick.denied($scope);
-  }
-
+  
+  
+  Identification.checkToken($scope);
+  $scope.mine.mineNgclick = "actions.login()";
 
 }])
 
 
-.controller('mainMine', ['$scope', 'Identification', 'Actions', function($scope, Identification, Actions) {
+.controller('mainMine', ['$scope', 'Identification', 'Actions', 'User', function($scope, Identification, Actions, User) {
   //console.log("#3----------"+$scope.$id);  //=====================test
   //Identification.checkToken($scope);
-  var checkin = Identification.checkToken($scope);
-  console.log("#2----------"+checkin+"====="+$scope.$id);  //=====================test
-  if (checkin) {
-  	Actions.mineClick.allowed($scope);
-  }
-  else {
-  	Actions.mineClick.denied($scope);
-  }
-
+  
+  Identification.checkToken($scope);
+  $scope.mine.mineNgclick = "actions.login()";
 
 }])
 
