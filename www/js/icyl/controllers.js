@@ -13,8 +13,18 @@ angular.module('icyl.controllers', [])
   //console.log("#2----------"+$scope.$id);  //=====================test
   //Params.outObj = $scope;
   
-  
-  Identification.checkToken($scope);
+  $scope.mine = {};
+  $scope.mine.mineNgclick = "actions.login()";
+  Identification.checkToken().then(function(data) {
+  	if (data.err_code == 0) {
+  		Actions.mineClick.allowed($scope);
+  	}
+  	else {
+  		Actions.mineClick.denied($scope);
+  	}
+  }, function(err) {
+  	console.log('错误：' + err);
+  });
   //$scope.mine.mineNgclick = "actions.login()";
 
 }])
@@ -24,7 +34,18 @@ angular.module('icyl.controllers', [])
   //console.log("#3----------"+$scope.$id);  //=====================test
   //Identification.checkToken($scope);
   
-  Identification.checkToken($scope);
+  $scope.mine = {};
+  $scope.mine.mineNgclick = "actions.login()";
+  Identification.checkToken().then(function(data) {
+  	if (data.err_code == 0) {
+  		Actions.mineClick.allowed($scope);
+  	}
+  	else {
+  		Actions.mineClick.denied($scope);
+  	}
+  }, function(err) {
+  	console.log('错误：' + err);
+  });
   //$scope.mine.mineNgclick = "actions.login()";
 
 }])
