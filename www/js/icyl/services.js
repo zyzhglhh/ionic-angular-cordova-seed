@@ -236,7 +236,7 @@ angular.module('icyl.services', ['ngResource'])
         User.userLogin($scope);
         User.userRegister($scope);
         //$scope.mine.mineNgclick = "actions.login()";  //这句语句在$resource之后actions.login()失效,可能和异步AJAX有关，具体原因还需详细分析？
-        $scope.mine.minehref = "#";
+        //$scope.mine.minehref = "#";
         //console.log("#14----------"+$scope.$id);  //=====================test 
       }
     }
@@ -262,6 +262,7 @@ angular.module('icyl.services', ['ngResource'])
     checkToken: function($scope) {
       
       $scope.mine = {};
+      $scope.mine.mineNgclick = "actions.login()";
       //console.log("#4----------"+$scope.$id);  //=====================test
 
       if (Storage.kget('username') && Storage.kget('password')) {

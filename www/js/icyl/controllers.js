@@ -15,7 +15,7 @@ angular.module('icyl.controllers', [])
   
   
   Identification.checkToken($scope);
-  $scope.mine.mineNgclick = "actions.login()";
+  //$scope.mine.mineNgclick = "actions.login()";
 
 }])
 
@@ -25,7 +25,7 @@ angular.module('icyl.controllers', [])
   //Identification.checkToken($scope);
   
   Identification.checkToken($scope);
-  $scope.mine.mineNgclick = "actions.login()";
+  //$scope.mine.mineNgclick = "actions.login()";
 
 }])
 
