@@ -223,21 +223,24 @@ angular.module('icyl.services', ['ngResource'])
 
 
 //页面行为函数
-.factory('Actions', ['User', function(User) {
+.factory('Actions', ['User', '$compile', function(User, $compile) {
   return {
     mineClick: {
       allowed: function($scope) {
-        //$scope.mine = {};
-        $scope.mine.mineNgclick = '';
+        $scope.mine = {};
+        //彻底解决：见241行说明
+        $scope.mine.mineNgclick = ''; //20140803-0131-改成promise后这里又出问题了，和actions.login()失效类似，但情况相反，这里ng-click赋值为空后，actions.login()还有效，好像ng-click有缓存一样
         $scope.mine.minehref = "#/main/mine";
         //console.log("#15----------"+$scope.$id);  //=====================test
       },
       denied: function($scope) {
-        //$scope.mine = {};
+        $scope.mine = {};
         $scope.actions = {};
         User.userLogin($scope);
         User.userRegister($scope);
-        //$scope.mine.mineNgclick = "actions.login()";  //这句语句在$resource之后actions.login()失效,可能和异步AJAX有关，具体原因还需详细分析？
+        //彻底解决：不要动态改变界面端(view)的ng-click文字，而是在controller中动态改变mine.mineNgclick绑定的对象，view中为ng-click='mine.mineNgclick()'
+        $scope.mine.mineNgclick = $scope.actions.login;  //这句语句在$resource之后actions.login()失效,可能和异步AJAX有关，具体原因还需详细分析？
+
         //$scope.mine.minehref = "#";
         //console.log("#14----------"+$scope.$id);  //=====================test 
       }
