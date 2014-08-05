@@ -101,3 +101,18 @@
 .text-right {
 	text-align: right;
 }
+
+.item-avatar{
+	padding-left: 100px;
+	padding-top: 25px;
+}
+
+.item-avater img{
+	padding:0,auto,0;
+}
+
+.item-avater h2 {
+	font-family: "微软雅黑";
+	font-weight: thick;
+	color: #FFF9F9;
+}
