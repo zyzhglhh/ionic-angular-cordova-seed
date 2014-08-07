@@ -102,17 +102,49 @@
 	text-align: right;
 }
 
-.item-avatar{
-	padding-left: 100px;
-	padding-top: 25px;
-}
 
+
+.item-avatar1 icon{
+	left: none;
+	right:15px;
+}
+.item-avatar1, .item-avatar1 .item-content, .item-avatar1-left, .item-avatar1-left .item-content {
+  padding-left: 70px;
+  min-height: 70px; }
+  .item-avatar1 > img:first-child, .item-avatar1 .item-image, .item-avatar1 .item-content > img:first-child, .item-avatar1 .item-content .item-image, .item-avatar-left > img:first-child, .item-avatar-left .item-image, .item-avatar-left .item-content > img:first-child, .item-avatar-left .item-content .item-image {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    max-width: 40px;
+    max-height: 40px;
+    width: 100%;
+    border-radius: 4px; 
+}
+.icon {
+	left:none;
+	top:15px;
+}
+/*
 .item-avater img{
 	padding:0,auto,0;
 }
 
+
+
 .item-avater h2 {
+	ftont-family: "微软雅黑";
+	fon-weight: thick;
+	color: #FFF9F9;
+}
+
+.item-avater p {
 	font-family: "微软雅黑";
 	font-weight: thick;
 	color: #FFF9F9;
 }
+
+.notice {
+	position: relative;
+	
+	padding: 0, auto ,0;
+}*/
