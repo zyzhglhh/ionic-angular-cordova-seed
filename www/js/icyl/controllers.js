@@ -54,4 +54,11 @@ angular.module('icyl.controllers', [])
   $scope.addmain = function() {
   	$rootScope.MaiViewName = "main";
   };
-});
+})
+
+.controller('mainSinger', ['$scope', function($scope){
+    //Actions.mineClick($scope);
+    //console.log("#1----------"+$scope.$id);  //=====================test
+}])
+
+;

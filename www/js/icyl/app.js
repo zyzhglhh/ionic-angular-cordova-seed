@@ -82,6 +82,16 @@ angular.module('icyl', dependencies)
       }
     })
 
+    .state('main.singer', {
+      url:'/singer',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/singer.html',
+          controller: 'mainSinger'
+        }
+      }
+    })
+
 
     // .state('main.register', {
     //   url:'/register',
@@ -93,122 +103,6 @@ angular.module('icyl', dependencies)
     //   }
     // })
     ;
-
-  $stateProvider
-
-    // setup an abstract state for the tabs directive
-    .state('tab', {
-      url: "/tab",
-      abstract: true,
-      templateUrl: "templates/tabs.html"
-    })
-
-    // the pet tab has its own child nav-view and history
-    .state('tab.pet-index', {
-      url: '/pets',
-      views: {
-        'pets-tab': {
-          templateUrl: 'templates/tabs/pet-index.html',
-          controller: 'PetIndexCtrl'
-        }
-      }
-    })
-
-    .state('tab.pet-detail', {
-      url: '/pet/:petId',
-      views: {
-        'pets-tab': {
-          templateUrl: 'templates/tabs/pet-detail.html',
-          controller: 'PetDetailCtrl'
-        }
-      }
-    })
-
-    .state('tab.main', {
-      url: '/main',
-      views: {
-        'main-tab': {
-          templateUrl: 'templates/tabs/mainbutton.html',
-          controller: 'MainTab'
-        }
-      }
-    })
-
-    .state('tab.adopt', {
-      url: '/adopt',
-      views: {
-        'adopt-tab': {
-          templateUrl: 'templates/tabs/adopt.html'
-        }
-      }
-    })
-
-    .state('tab.about', {
-      url: '/about',
-      views: {
-        'about-tab': {
-          templateUrl: 'templates/tabs/about.html'
-        }
-      }
-    });
-
-  $stateProvider
-
-    // setup an abstract state for the tabs directive
-    .state('test', {
-      url: "/test",
-      abstract: true,
-      templateUrl: "templates/test.html"
-    })
-
-    // the pet tab has its own child nav-view and history
-    .state('test.pet-index', {
-      url: '/pets',
-      views: {
-        'pets-test': {
-          templateUrl: 'templates/test/pet-index.html',
-          controller: 'PetIndexCtrl'
-        }
-      }
-    })
-
-    .state('test.pet-detail', {
-      url: '/pet/:petId',
-      views: {
-        'pets-test': {
-          templateUrl: 'templates/test/pet-detail.html',
-          controller: 'PetDetailCtrl'
-        }
-      }
-    })
-
-    .state('test.main', {
-      url: '/main',
-      views: {
-        'main-test': {
-          templateUrl: 'templates/test/mainbutton.html',
-          controller: 'MainTab'
-        }
-      }
-    })
-
-    .state('test.adopt', {
-      url: '/adopt',
-      views: {
-        'adopt-test': {
-          templateUrl: 'templates/test/adopt.html'
-        }
-      }
-    })
-
-    .state('test.about', {
-      url: '/about',
-      views: {
-        'about-test': {
-          templateUrl: 'templates/test/about.html'
-        }
-      }
-    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/main/default');

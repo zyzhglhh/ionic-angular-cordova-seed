@@ -1,0 +1,155 @@
+<!--#include file="../inc/sub.asp" -->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<title>用户登录</title>
+<meta name="Keywords" content="<%=Keywords%>" />
+<meta name="Description" content="<%=Descriptions%>" />
+
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+
+<!-- ionic css -->
+<link href="../../lib/css/ionic.min.css" rel="stylesheet">
+
+<!-- ionicons css -->
+<link href="../../lib/css/ionicons.min.css" rel="stylesheet">
+<style>
+form{ margin:0px; padding:0px;}
+
+.loginleft{ width:auto; height:auto; margin:10px auto 0 auto; overflow:hidden;float:left;}
+
+.loginbox{ background:url(images/bt_panel_1.jpg) no-repeat; width:312px; height:auto; float:left; margin:0 8px;*margin:0 8px 0 0;}
+.loginbox .logintitle{ margin-top:12px;margin-left:12px;width:90px; text-align:center; color:#FFFFFF; font-size:18px; font-family:"微软雅黑"; }
+.loginbox .logincon{ margin-top:5px; margin-left:20px; margin-bottom:20px; font-size:14px; }
+.loginbox .logincon input.txt{ width:160px; height:20px; border:#CCCCCC solid 1px; font-size:14px; font-family:"宋体"; }
+.loginbox .loginbottom{ width:312px; height:30px; background: url(images/panel_ft_1.jpg) no-repeat; }
+
+.tool{ width:970px; height:auto; margin:10px auto;}
+.tool .tool_title{ width:468px; height:30px; background: #CC3333; margin:1px;clear:both;}
+.tool .tool_title span{ line-height:30px; font-size:16px; margin-left:10px; font-weight:bold; color:#ffffff; }
+
+.tool .tool_left{ width:470px; height:auto; float:left; margin-right:15px; text-align:center; border:#CCCCCC solid 1px;}
+.tool .tool_right{ width:470px; height:auto; float:right; text-align:center; border:#CCCCCC solid 1px;}
+.tool .tool_con{ padding:20px 0px;}
+.tool .tool_con a{ color: #333333; font-size:14px; ;padding:3px 10px; text-decoration:none; border:#ffffff dashed 1px;}
+.tool .tool_con a:hover{ color: #333333; font-size:14px;  padding:3px 10px; border:#CCCCCC dashed 1px;}
+
+</style>
+
+<script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/common.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+
+
+function checkqiye(){
+
+if( qiyeform.yhm.value =="") {
+alert("企业账号不能为空!")
+document.qiyeform.yhm.focus();
+return false;
+}
+else if( qiyeform.kl.value =="") {
+alert("企业密码不能为空!")
+document.qiyeform.kl.focus();
+return false;
+}
+
+}
+
+function checkgeren(){
+
+if( gerenform.username.value =="") {
+alert("个人账号不能为空!")
+document.gerenform.username.focus();
+return false;
+}
+else if( gerenform.password.value =="") {
+alert("个人密码不能为空!")
+document.gerenform.password.focus();
+return false;
+}
+
+}
+
+</script>
+</head>
+
+<body>
+
+<div class="center" style="margin-top:10px;">
+<div class="loginleft">
+
+
+<div class="loginbox">
+<div class="logintitle">用户登录</div>
+<div class="logincon">
+<% reg_nbr1=Request.Cookies("xsunion")("reg_nbr")
+did=request.querystring("did")
+lt=request.querystring("lt")
+If did="" Then %>
+<FORM name="gerenform" ACTION="chklogin_app.asp" METHOD="post" onSubmit="return checkgeren()">
+<%Else %>
+<FORM name="gerenform" ACTION="chklogin_app_1.asp" METHOD="post" onSubmit="return checkgeren()">
+
+<% End If %>
+
+<!-- <table width="300" border="0" cellpadding="0" cellspacing="2" align="center">
+    <tr> 
+        <td height="30" colspan="2" align="center"><br><b><strong>&nbsp;</strong></b><br><br></td>
+    </tr>
+    <tr> 
+      <td height="25" align="right">用户卡号：</td>
+      <td>
+	  <input name="username" maxlength="20" class="txt"  >
+	  <input name="did" maxlength="20" type="hidden" value="<%=request.querystring("did")%>" >
+	  <input name="lt" maxlength="20" type="hidden" value="<%=lt%>" >
+	  	  </td>
+    </tr>
+	 <tr> 
+        <td height="30" colspan="2" align="center"><br><b><strong>&nbsp;</strong></b><br><br></td>
+    </tr>
+    <tr> 
+      <td height="25" align="right">用户密码：</td>
+      <td>
+	  <input name="password" type="password" maxlength="20" class="txt">
+	  </td>
+    </tr>
+    <tr> 
+      <td height="25" colspan="2" align="center">
+	 <br><input name="Submit" type="submit" value="登录系统" class="input_blue">
+        </td>
+    </tr>
+  </table> -->
+  <div class="list">
+    <label class="item item-input">
+      <span class="input-label">用户卡号</span>
+      <input type="text"></label>
+    <label class="item item-input">
+      <span class="input-label">用户密码</span>
+      <input type="password"></label>
+    <button class="button button-block button-positive">登录系统</button>
+  </div>
+
+    
+
+</form>
+</div>
+<div class="loginbottom"></div>
+
+</div>
+
+
+<div class="loginbottom"></div>
+
+</div>
+
+
+</div>
+
+
+</body>
+</html>
