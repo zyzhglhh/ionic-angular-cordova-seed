@@ -92,6 +92,56 @@ angular.module('icyl', dependencies)
       }
     })
 
+    .state('main.notice', {
+      url:'/notice',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/singer_notice.html',
+          controller: 'mainNotice'
+        }
+      }
+    })
+
+    .state('main.signup', {
+      url:'/signup',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/singer_signup.html',
+          controller: 'mainSignup'
+        }
+      }
+    })
+
+    .state('main.message', {
+      url:'/message',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/singer_signmessage.html',
+          controller: 'mainMessage'
+        }
+      }
+    })
+
+    .state('main.style', {
+      url:'/style',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/singer_style.html',
+          controller: 'mainStyle'
+        }
+      }
+    })
+
+    .state('main.details', {
+      url:'/details',
+      views: {
+        'main-container': {
+          templateUrl: 'templates/main/singer_style_details.html',
+          controller: 'mainDetails'
+        }
+      }
+    })
+
 
     // .state('main.register', {
     //   url:'/register',

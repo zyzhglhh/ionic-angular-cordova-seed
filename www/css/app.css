@@ -175,3 +175,8 @@
 	position: absolute;
 	top:18px;
 }
+a h2{
+	font-family: "华文细黑";	
+}
+
+.notice a{text-decoration:none;}

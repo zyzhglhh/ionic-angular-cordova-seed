@@ -61,4 +61,29 @@ angular.module('icyl.controllers', [])
     //console.log("#1----------"+$scope.$id);  //=====================test
 }])
 
+.controller('mainNotice', ['$scope', function($scope){
+    //Actions.mineClick($scope);
+    //console.log("#1----------"+$scope.$id);  //=====================test
+}])
+
+.controller('mainSignup', ['$scope', function($scope){
+    //Actions.mineClick($scope);
+    //console.log("#1----------"+$scope.$id);  //=====================test
+}])
+
+.controller('mainMessage', ['$scope', function($scope){
+    //Actions.mineClick($scope);
+    //console.log("#1----------"+$scope.$id);  //=====================test
+}])
+
+.controller('mainStyle', ['$scope', function($scope){
+    //Actions.mineClick($scope);
+    //console.log("#1----------"+$scope.$id);  //=====================test
+}])
+
+.controller('mainDetails', ['$scope', function($scope){
+    //Actions.mineClick($scope);
+    //console.log("#1----------"+$scope.$id);  //=====================test
+}])
+
 ;
